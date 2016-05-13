@@ -1,0 +1,20 @@
+<div class="solution-center-feedback">
+    <div class="feedback__title">
+        <div class="feedback__title--upper">
+            We value your opinion
+        </div>
+        <div class="feedback__title--lower">
+            How do you rate {{feedbackCtrl.module.name}}?
+        </div>
+    </div>
+    <div class="feedback__rating">
+
+    </div>
+    <div class="feedback__comment">
+        <input class="dc-input" type="text" placeholder="Leave a comment (optional)" />
+        <button class="dc-btn dc-btn--primary" ng-click="feedbackCtrl.submitFeedback()">Submit</button>
+    </div>
+    <div class="feedback__later">
+        <a href class="dc-link" ng-click="feedbackCtrl.minify()">Answer later</a>
+    </div>
+</div>

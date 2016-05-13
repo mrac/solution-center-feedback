@@ -1,10 +1,13 @@
 'use strict';
 
-angular.module('solutionCenter', [])
+angular.module('solutionCenter.feedback', [])
     .component('solutionCenterFeedback', {
-        bindings: {
-        },
-        controller: 'SolutionCenterFeedbackController',
-        controllerAs: 'feedbackCtrl',
-        templateUrl: 'solution-center-feedback.tmpl.html'
+      bindings: {
+        module: '='
+      },
+      controller: 'SolutionCenterFeedbackController',
+      controllerAs: 'feedbackCtrl',
+      template: ['$templateCache', function($templateCache) {
+        return $templateCache.get('solution-center-feedback.html');
+      }]
     });

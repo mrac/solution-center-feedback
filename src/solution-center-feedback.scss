@@ -1,4 +1,5 @@
 @import "../bower_components/dress-code/dist/sass/dress-code";
+
 $dc-font-path: "fonts";
 
 //  ---------------------------------------------------------------------------
@@ -6,3 +7,56 @@ $dc-font-path: "fonts";
 //  Solution Center Feedback Styles
 //
 //  ---------------------------------------------------------------------------
+
+.solution-center-feedback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: $dc-gray20;
+  z-index: 100;
+  padding: 10px 3%;
+
+  .feedback__title {
+    width: 24%;
+    color: $dc-white;
+
+    &--upper {
+      font-size: 11px;
+      font-face: Ubuntu-Medium;
+      text-transform: uppercase;
+    }
+
+    &--lower {
+      font-size: 18px;
+      font-face: Ubuntu-Light;
+    }
+  }
+
+  .feedback__rating {
+    width: 20%;
+  }
+
+  .feedback__comment {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    padding: 0 2%;
+
+    .dc-input {
+      width: 70%;
+      margin-bottom: 0;
+    }
+
+    .dc-btn {
+      width: 24%;
+      margin-left: 2%;
+    }
+  }
+
+  .feedback__later {
+    width: 10%;
+  }
+}

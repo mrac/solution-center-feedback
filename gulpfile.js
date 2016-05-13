@@ -3,8 +3,6 @@ var connect = require('gulp-connect');
 var gulp = require('gulp');
 var karma = require('karma').server;
 var concat = require('gulp-concat');
-var jshint = require('gulp-jshint');
-var footer = require('gulp-footer');
 var rename = require('gulp-rename');
 var es = require('event-stream');
 var del = require('del');
@@ -17,16 +15,7 @@ var open = require('gulp-open');
 var sass = require('gulp-sass');
 var order = require("gulp-order");
 var flatten = require("gulp-flatten");
-
-var config = {
-  pkg : JSON.parse(fs.readFileSync('./package.json')),
-  banner:
-      '/*!\n' +
-      ' * <%= pkg.name %>\n' +
-      ' * <%= pkg.homepage %>\n' +
-      ' * License: <%= pkg.license %>\n' +
-      ' */\n\n\n'
-};
+var eslint = require('gulp-eslint');
 
 gulp.task('connect', function() {
   connect.server({
@@ -51,7 +40,6 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('scripts', function() {
-
   function buildTemplates() {
     return gulp.src('src/**/*.html')
       .pipe(minifyHtml({
@@ -59,17 +47,14 @@ gulp.task('scripts', function() {
              spare: true,
              quotes: true
             }))
-      .pipe(templateCache({module: 'solutionCenter'}));
+      .pipe(templateCache({module: 'solutionCenter.feedback'}));
   };
 
   function buildDistJS(){
-    return gulp.src('src/*.js')
+    return gulp.src('src/**/*.js')
       .pipe(plumber({
         errorHandler: handleError
-      }))
-      .pipe(jshint())
-      .pipe(jshint.reporter('jshint-stylish'))
-      .pipe(jshint.reporter('fail'));
+      }));
   };
 
   es.merge(buildDistJS(), buildTemplates())
@@ -81,9 +66,6 @@ gulp.task('scripts', function() {
       'template.js'
     ]))
     .pipe(concat('solution-center-feedback.js'))
-    .pipe(footer(config.banner, {
-      pkg: config.pkg
-    }))
     .pipe(gulp.dest('dist'))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify({preserveComments: 'some'}))
@@ -93,12 +75,8 @@ gulp.task('scripts', function() {
 
 
 gulp.task('styles', function() {
-
   return gulp.src('src/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(footer(config.banner, {
-      timestamp: (new Date()).toISOString(), pkg: config.pkg
-    }))
     .pipe(gulp.dest('dist'))
     .pipe(minifyCSS())
     .pipe(rename({suffix: '.min'}))
@@ -124,8 +102,16 @@ gulp.task('open', function(){
   .pipe(open('', {url: 'http://localhost:8080/demo/demo.html'}));
 });
 
-gulp.task('jshint-test', function(){
-  return gulp.src('./test/**/*.js').pipe(jshint());
+gulp.task('lint', function () {
+  return gulp.src('src/*.js')
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
+});
+
+gulp.task('lint-test', function(){
+  return gulp.src('./test/**/*.js')
+      .pipe(eslint());
 });
 
 gulp.task('karma', ['build'], function (done) {
@@ -147,8 +133,8 @@ function handleError(err) {
   this.emit('end');
 };
 
-gulp.task('build', ['scripts', 'styles', 'fonts', 'images']);
+gulp.task('build', ['lint', 'scripts', 'styles', 'fonts', 'images']);
 gulp.task('serve', ['build', 'connect', 'watch', 'open']);
 gulp.task('default', ['build', 'test']);
-gulp.task('test', ['build', 'jshint-test', 'karma']);
-gulp.task('serve-test', ['build', 'watch', 'jshint-test', 'karma-serve']);
+gulp.task('test', ['build', 'lint-test', 'karma']);
+gulp.task('serve-test', ['build', 'watch', 'lint-test', 'karma-serve']);
