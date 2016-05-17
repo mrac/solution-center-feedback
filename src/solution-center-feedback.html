@@ -8,13 +8,24 @@
         </div>
     </div>
     <div class="feedback__rating">
-
+        <div class="feedback__rating__stars">
+            <ng-repeat ng-repeat="i in [5,4,3,2,1]">
+                <input type="radio" id="star-{{i}}" class="feedback__rating__input">
+                <label for="star-{{i}}" class="feedback__rating__star" ng-class="{colored: feedbackCtrl.rating >= i}"
+                       ng-click="feedbackCtrl.fixRating(i)"
+                       ng-mouseenter="feedbackCtrl.updateRating(i)"
+                       ng-mouseleave="feedbackCtrl.updateRating(0)">
+                </label>
+            </ng-repeat>
+        </div>
+        <span class="feedback__rating__score">{{feedbackCtrl.rating}}/5</span>
     </div>
     <div class="feedback__comment">
-        <input class="dc-input" type="text" placeholder="Leave a comment (optional)" />
+        <input class="dc-input" type="text" placeholder="Leave a comment (optional)"/>
         <button class="dc-btn dc-btn--primary" ng-click="feedbackCtrl.submitFeedback()">Submit</button>
     </div>
     <div class="feedback__later">
         <a href class="dc-link" ng-click="feedbackCtrl.minify()">Answer later</a>
     </div>
 </div>
+

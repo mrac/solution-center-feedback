@@ -16,12 +16,12 @@ $dc-font-path: "fonts";
   bottom: 0;
   width: 100%;
   background-color: $dc-gray20;
+  color: $dc-white;
   z-index: 100;
   padding: 10px 3%;
 
   .feedback__title {
     width: 24%;
-    color: $dc-white;
 
     &--upper {
       font-size: 11px;
@@ -37,6 +37,38 @@ $dc-font-path: "fonts";
 
   .feedback__rating {
     width: 20%;
+
+    &__stars {
+      float: left;
+      margin-right: 10px;
+
+      &:not(:checked) {
+        .feedback__rating__input {
+          position: absolute;
+          top: -9999px;
+        }
+
+        .feedback__rating__star {
+          float: right;
+          width: 24px;
+          height: 24px;
+          margin-right: 4px;
+          overflow: hidden;
+          white-space: nowrap;
+          cursor: pointer;
+          font-size: 200%;
+          color: $dc-white;
+
+          &.colored {
+            color: $dc-yellow50;
+          }
+
+          &:before {
+            content: '★';
+          }
+        }
+      }
+    }
   }
 
   .feedback__comment {
@@ -58,5 +90,9 @@ $dc-font-path: "fonts";
 
   .feedback__later {
     width: 10%;
+
+    .dc-link {
+      color: $dc-white;
+    }
   }
 }
