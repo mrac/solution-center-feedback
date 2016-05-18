@@ -1,30 +1,41 @@
 angular.module('solutionCenter.feedback')
     .controller('SolutionCenterFeedbackController',
-        ['solutionCenterFeedbackService',
-          function (solutionCenterFeedbackService) {
+        ['solutionCenterFeedbackService', '$cookies',
+          function (solutionCenterFeedbackService, $cookies) {
             'use strict';
+
+            var FEEDBACK_COOKIE_NAME = 'SC_FEEDBACK';
 
             var vm = this;
 
-            vm.isMinified = false;
+            vm.isMinified = $cookies.get(FEEDBACK_COOKIE_NAME) === 'true' || false;
+            vm.hoverRating = 0;
             vm.rating = 0;
-            vm.fixedRating = 0;
 
             vm.submitFeedback = function () {
-              solutionCenterFeedbackService.submitFeedback();
+              solutionCenterFeedbackService.submitFeedback()
+                  .then(
+                      function() {
+
+                      },
+                      function() {
+
+                      }
+                  );
             };
 
-            vm.minify = function () {
-              vm.isMinified = true;
+            vm.toggleMenu = function () {
+              vm.isMinified = !vm.isMinified;
+              $cookies.put(FEEDBACK_COOKIE_NAME, vm.isMinified);
             };
 
-            vm.fixRating = function(newRating) {
-              vm.fixedRating = newRating;
+            vm.setRating = function(newRating) {
               vm.rating = newRating;
+              vm.hoverRating = newRating;
             };
 
             vm.updateRating = function (newRating) {
-              vm.rating = (newRating === 0) ? vm.fixedRating : newRating;
+              vm.hoverRating = (newRating === 0) ? vm.rating : newRating;
             };
           }
         ]);

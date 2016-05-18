@@ -1,12 +1,11 @@
 'use strict';
 
-angular.module('solutionCenter.feedback', [])
+angular.module('solutionCenter.feedback', ['ngCookies'])
     .component('solutionCenterFeedback', {
       bindings: {
-        module: '='
+        module: '<'
       },
       controller: 'SolutionCenterFeedbackController',
-      controllerAs: 'feedbackCtrl',
       template: ['$templateCache', function($templateCache) {
         return $templateCache.get('solution-center-feedback.html');
       }]
