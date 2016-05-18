@@ -17,10 +17,15 @@ $dc-font-path: "fonts";
   z-index: 100;
 
   &--opened {
+    flex-direction: row;
     background-color: $dc-gray20;
     justify-content: center;
     align-items: center;
     padding: 10px 3%;
+
+    @media (max-width: 950px) {
+      flex-direction: column;
+    }
   }
 
   &--minified {
@@ -86,22 +91,34 @@ $dc-font-path: "fonts";
     width: 40%;
     padding: 0 2%;
 
+    @media (max-width: 950px) {
+      padding: 0;
+    }
+
     .dc-input {
       width: 70%;
       margin-bottom: 0;
     }
 
     .dc-btn {
-      width: 24%;
+      width: 28%;
       margin-left: 2%;
     }
   }
 
   .feedback__later {
     width: 10%;
+    text-align: center;
 
     .dc-link {
       color: $dc-white;
+    }
+  }
+
+  .feedback__block {
+    @media (max-width: 950px) {
+      width: 100%;
+      margin-bottom: 20px;
     }
   }
 
