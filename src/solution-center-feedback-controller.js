@@ -13,7 +13,12 @@ angular.module('solutionCenter.feedback')
             vm.rating = 0;
 
             vm.submitFeedback = function () {
-              solutionCenterFeedbackService.submitFeedback()
+              var feedback = {
+                rating: vm.rating,
+                comment: vm.comment
+              };
+
+              solutionCenterFeedbackService.submitFeedback(feedback)
                   .then(
                       function() {
 

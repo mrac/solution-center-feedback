@@ -22,8 +22,9 @@
         <span class="feedback__rating__score">{{$ctrl.rating}}/5</span>
     </div>
     <div class="feedback__comment feedback__block">
-        <input class="dc-input" type="text" placeholder="Leave a comment (optional)"/>
-        <button class="dc-btn dc-btn--primary" ng-click="$ctrl.submitFeedback()">Submit</button>
+        <input ng-model="$ctrl.comment" class="dc-input" type="text" placeholder="Leave a comment (optional)"/>
+        <button class="dc-btn" ng-class="{'dc-btn--primary': $ctrl.rating !== 0, 'dc-btn--disabled': $ctrl.rating === 0}"
+                ng-click="$ctrl.submitFeedback()">Submit</button>
     </div>
     <div class="feedback__later feedback__block">
         <a href class="dc-link" ng-click="$ctrl.toggleMenu()">Answer later</a>

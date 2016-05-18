@@ -90,6 +90,7 @@ $dc-font-path: "fonts";
     align-items: center;
     width: 40%;
     padding: 0 2%;
+    color: $dc-black;
 
     @media (max-width: 950px) {
       padding: 0;
