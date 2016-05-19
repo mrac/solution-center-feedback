@@ -18,10 +18,10 @@ $dc-font-path: "fonts";
 
   &--opened {
     flex-direction: row;
-    background-color: $dc-gray20;
+    background-color: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
-    padding: 10px 3%;
+    padding: 16px 3%;
 
     @media (max-width: 950px) {
       flex-direction: column;
@@ -39,13 +39,19 @@ $dc-font-path: "fonts";
 
     &--upper {
       font-size: 11px;
-      font-face: Ubuntu-Medium;
       text-transform: uppercase;
+
+      @media (max-width: 950px) {
+        font-size: 14px;
+      }
     }
 
     &--lower {
       font-size: 18px;
-      font-face: Ubuntu-Light;
+
+      @media (max-width: 950px) {
+        font-size: 21px;
+      }
     }
   }
 
@@ -54,7 +60,7 @@ $dc-font-path: "fonts";
 
     &__stars {
       float: left;
-      margin-right: 10px;
+      margin-right: 8px;
 
       &:not(:checked) {
         .feedback__rating__input {
@@ -83,6 +89,10 @@ $dc-font-path: "fonts";
         }
       }
     }
+
+    &__score {
+      font-size: 14px;
+    }
   }
 
   .feedback__comment {
@@ -103,7 +113,7 @@ $dc-font-path: "fonts";
 
     .dc-btn {
       width: 28%;
-      margin-left: 2%;
+      margin-left: 8px;
     }
   }
 
@@ -113,6 +123,11 @@ $dc-font-path: "fonts";
 
     .dc-link {
       color: $dc-white;
+      font-size: 14px;
+    }
+
+    @media (max-width: 950px) {
+      margin-bottom: 0 !important;
     }
   }
 

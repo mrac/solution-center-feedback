@@ -20,7 +20,8 @@ var eslint = require('gulp-eslint');
 gulp.task('connect', function() {
   connect.server({
     root: '.',
-    livereload: true
+    livereload: true,
+    port: 3500
   });
 });
 
@@ -99,7 +100,7 @@ gulp.task('fonts', function () {
 
 gulp.task('open', function(){
   gulp.src('./demo/demo.html')
-  .pipe(open('', {url: 'http://localhost:8080/demo/demo.html'}));
+  .pipe(open('', {url: 'http://localhost:3500/demo/demo.html'}));
 });
 
 gulp.task('lint', function () {
