@@ -1,5 +1,8 @@
-<div class="solution-center-feedback solution-center-feedback--opened" ng-if="$ctrl.isMinified === false">
-    <div class="feedback__title feedback__block">
+<div class="solution-center-feedback" ng-if="$ctrl.isMinified === false"
+     ng-class="{'solution-center-feedback--opened': $ctrl.hidden === false,
+                'solution-center-feedback--closed': $ctrl.hidden}">
+
+    <div class="feedback__title feedback__block" ng-if="$ctrl.submitted === false">
         <div class="feedback__title--upper">
             We value your opinion
         </div>
@@ -7,7 +10,8 @@
             How do you rate {{$ctrl.module.name}}?
         </div>
     </div>
-    <div class="feedback__rating feedback__block">
+
+    <div class="feedback__rating feedback__block" ng-if="$ctrl.submitted === false">
         <div class="feedback__rating__stars">
             <ng-repeat ng-repeat="i in [5,4,3,2,1]">
                 <input type="radio" id="star-{{i}}" class="feedback__rating__input">
@@ -19,22 +23,32 @@
                 </label>
             </ng-repeat>
         </div>
+
         <span class="feedback__rating__score">{{$ctrl.rating}}/5</span>
     </div>
-    <div class="feedback__comment feedback__block">
+
+    <div class="feedback__comment feedback__block" ng-if="$ctrl.submitted === false">
         <input ng-model="$ctrl.comment" class="dc-input" type="text" placeholder="Leave a comment (optional)"/>
+
         <button class="dc-btn" ng-class="{'dc-btn--primary': $ctrl.rating !== 0, 'dc-btn--disabled': $ctrl.rating === 0}"
                 ng-click="$ctrl.submitFeedback()">Submit</button>
     </div>
-    <div class="feedback__later feedback__block">
-        <a href class="dc-link" ng-click="$ctrl.toggleMenu()">Answer later</a>
+
+    <div class="feedback__later feedback__block" ng-if="$ctrl.submitted === false">
+        <span class="dc-text" ng-click="$ctrl.toggleMenu()">Answer later</span>
     </div>
+
+    <div class="feedback__submitted" ng-if="$ctrl.submitted">
+        <span class="dc-text">Thanks!</span>
+    </div>
+
 </div>
 
 <div class="solution-center-feedback solution-center-feedback--minified" ng-if="$ctrl.isMinified">
     <div class="feedback__opener" ng-click="$ctrl.toggleMenu()">
         Rate {{$ctrl.module.name}}
     </div>
+
     <div class="feedback__opener__bottom-bar"></div>
 </div>
 
