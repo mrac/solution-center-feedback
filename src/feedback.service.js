@@ -1,5 +1,5 @@
-angular.module('solutionCenter.feedback')
-    .factory('solutionCenterFeedbackService',
+angular.module('solutioncenter.feedback')
+    .factory('scFeedbackService',
         [
           function () {
             'use strict';

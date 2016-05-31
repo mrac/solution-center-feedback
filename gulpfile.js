@@ -17,7 +17,7 @@ var order = require("gulp-order");
 var flatten = require("gulp-flatten");
 var eslint = require('gulp-eslint');
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   connect.server({
     root: '.',
     livereload: true,
@@ -27,80 +27,81 @@ gulp.task('connect', function() {
 
 gulp.task('html', function () {
   gulp.src(['./demo/*.html', 'src/*.html'])
-    .pipe(connect.reload());
+      .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
   gulp.watch(['./demo/**/*.html'], ['html']);
   gulp.watch(['./**/*.scss'], ['build']);
-  gulp.watch(['./src/**/*.js','./demo/**/*.js', './**/*.html'], ['build']);
+  gulp.watch(['./src/**/*.js', './demo/**/*.js', './**/*.html'], ['build']);
 });
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
   del(['dist'], cb);
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts', function () {
   function buildTemplates() {
     return gulp.src('src/**/*.html')
-      .pipe(minifyHtml({
-             empty: true,
-             spare: true,
-             quotes: true
-            }))
-      .pipe(templateCache({module: 'solutionCenter.feedback'}));
+        .pipe(minifyHtml({
+          empty: true,
+          spare: true,
+          quotes: true
+        }))
+        .pipe(templateCache({module: 'solutioncenter.feedback'}));
   };
 
-  function buildDistJS(){
+  function buildDistJS() {
     return gulp.src('src/**/*.js')
-      .pipe(plumber({
-        errorHandler: handleError
-      }));
+        .pipe(plumber({
+          errorHandler: handleError
+        }));
   };
 
   es.merge(buildDistJS(), buildTemplates())
-    .pipe(plumber({
-      errorHandler: handleError
-    }))
-    .pipe(order([
-      'solution-center-feedback.js',
-      'template.js'
-    ]))
-    .pipe(concat('solution-center-feedback.js'))
-    .pipe(gulp.dest('dist'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify({preserveComments: 'some'}))
-    .pipe(gulp.dest('./dist'))
-    .pipe(connect.reload());
+      .pipe(plumber({
+        errorHandler: handleError
+      }))
+      .pipe(order([
+        'solutioncenter.feedback.js',
+        'template.js'
+      ]))
+      .pipe(concat('solutioncenter.feedback.js'))
+      .pipe(gulp.dest('dist'))
+      .pipe(rename({suffix: '.min'}))
+      .pipe(uglify({preserveComments: 'some'}))
+      .pipe(gulp.dest('./dist'))
+      .pipe(connect.reload());
 });
 
 
-gulp.task('styles', function() {
+gulp.task('styles', function () {
   return gulp.src('src/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('dist'))
-    .pipe(minifyCSS())
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('dist'))
-    .pipe(connect.reload());
+      .pipe(sass().on('error', sass.logError))
+      .pipe(concat('solutioncenter.feedback.css'))
+      .pipe(gulp.dest('dist'))
+      .pipe(minifyCSS())
+      .pipe(rename({suffix: '.min'}))
+      .pipe(gulp.dest('dist'))
+      .pipe(connect.reload());
 });
 
 gulp.task('images', function () {
   return gulp.src('src/img/*')
-    .pipe(gulp.dest('dist/img/'))
-    .pipe(connect.reload());
+      .pipe(gulp.dest('dist/img/'))
+      .pipe(connect.reload());
 });
 
 gulp.task('fonts', function () {
   return gulp.src('bower_components/dress-code/**/*.{eot,ttf,woff}')
-    .pipe(flatten())
-    .pipe(gulp.dest('dist/fonts/'))
-    .pipe(connect.reload());
+      .pipe(flatten())
+      .pipe(gulp.dest('dist/fonts/'))
+      .pipe(connect.reload());
 });
 
-gulp.task('open', function(){
+gulp.task('open', function () {
   gulp.src('./demo/demo.html')
-  .pipe(open('', {url: 'http://localhost:3500/demo/demo.html'}));
+      .pipe(open('', {url: 'http://localhost:3500/demo/demo.html'}));
 });
 
 gulp.task('lint', function () {
@@ -110,7 +111,7 @@ gulp.task('lint', function () {
       .pipe(eslint.failAfterError());
 });
 
-gulp.task('lint-test', function(){
+gulp.task('lint-test', function () {
   return gulp.src('./test/**/*.js')
       .pipe(eslint());
 });
@@ -122,7 +123,7 @@ gulp.task('karma', ['build'], function (done) {
   }, done);
 });
 
-gulp.task('karma-serve', ['build'], function(done){
+gulp.task('karma-serve', ['build'], function (done) {
   karma.start({
     configFile: __dirname + '/karma.conf.js',
     singleRun: false

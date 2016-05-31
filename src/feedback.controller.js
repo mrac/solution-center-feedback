@@ -1,7 +1,7 @@
-angular.module('solutionCenter.feedback')
-    .controller('SolutionCenterFeedbackController',
-        ['solutionCenterFeedbackService', '$cookies', '$timeout',
-          function (solutionCenterFeedbackService, $cookies, $timeout) {
+angular.module('solutioncenter.feedback')
+    .controller('scFeedbackController',
+        ['scFeedbackService', '$cookies', '$timeout',
+          function (scFeedbackService, $cookies, $timeout) {
             'use strict';
 
             var FEEDBACK_COOKIE_NAME = 'SC_FEEDBACK';
@@ -20,7 +20,7 @@ angular.module('solutionCenter.feedback')
                 comment: vm.comment
               };
 
-              solutionCenterFeedbackService.submitFeedback(feedback)
+              scFeedbackService.submitFeedback(feedback)
                   .then(
                       function () {
                         vm.submitted = true;

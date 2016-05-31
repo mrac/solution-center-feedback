@@ -1,5 +1,5 @@
-angular.module('demo', ['solutionCenter.feedback'])
-    .controller('demoController', [
+angular.module('demo', ['solutioncenter.feedback'])
+    .controller('DemoController', [
       function () {
         var vm = this;
 

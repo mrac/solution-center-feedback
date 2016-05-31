@@ -6,12 +6,12 @@
 
         <link href="../bower_components/dress-code/dist/css/dress-code.min.css" rel="stylesheet">
         <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Ubuntu:300,400,500'>
-        <link rel="stylesheet" href="../dist/solution-center-feedback.css">
+        <link rel="stylesheet" href="../dist/solutioncenter.feedback.css">
         <link rel="stylesheet" href="demo.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
-    <body class="dc-body" ng-controller="demoController as demoCtrl">
+    <body class="dc-body" ng-controller="DemoController as demoCtrl">
         <div>
             <h1 class="text-muted">Demo</h1>
 
@@ -19,18 +19,18 @@
                 <h4>Simple usage</h4>
                 <p>This is a simple usage of the Solution Center feedback tool. The following directive is added at the bottom of the page:</p>
                 <pre>
-                  &lt;solution-center-feedback
+                  &lt;sc-feedback
                     module=&quot;demoCtrl.module&quot;&gt;
-                  &lt;/solution-center-feedback&gt;
+                  &lt;/sc-feedback&gt;
                 </pre>
             </div>
 
-            <solution-center-feedback module="demoCtrl.module"></solution-center-feedback>
+            <sc-feedback module="demoCtrl.module"></sc-feedback>
         </div>
 
         <script src="../bower_components/angular/angular.min.js"></script>
         <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
-        <script src="../dist/solution-center-feedback.js"></script>
+        <script src="../dist/solutioncenter.feedback.js"></script>
         <script src="demo.js"></script>
     </body>
 </html>
