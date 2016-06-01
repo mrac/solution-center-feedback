@@ -6,5 +6,5 @@ angular.module('solutioncenter.feedback')
         module: '<'
       },
       controller: 'scFeedbackController',
-      template: ['$templateCache', $templateCache => $templateCache.get('../views/feedback.html')]
+      template: ['$templateCache', $templateCache => $templateCache.get('feedback.html')]
     });

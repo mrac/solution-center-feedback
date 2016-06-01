@@ -169,7 +169,6 @@ function handleError(err) {
   this.emit('end');
 };
 
-//gulp.task('build', ['ts-lint', 'compile-ts', 'scripts', 'styles']);
 gulp.task('build', ['ts-lint', 'compile-ts', 'scripts', 'styles']);
 gulp.task('serve', ['build', 'connect', 'watch', 'open']);
 gulp.task('test', ['build', 'lint-test', 'karma']);
