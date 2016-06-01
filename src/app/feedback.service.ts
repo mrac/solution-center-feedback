@@ -3,7 +3,7 @@ angular.module('solutioncenter.feedback')
         [function () {
             'use strict';
 
-            var submitFeedback = () => {};
+            let submitFeedback = () => {};
 
             return {
               submitFeedback: submitFeedback
