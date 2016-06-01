@@ -17,7 +17,7 @@ var fs = require('fs'),
     flatten = require("gulp-flatten"),
     eslint = require('gulp-eslint'),
     tsc = require('gulp-typescript'),
-    //tslint = require('gulp-tslint'),
+    tslint = require('gulp-tslint'),
     tsProject = tsc.createProject('tsconfig.json'),
     sourcemaps = require('gulp-sourcemaps'),
     runSequence = require('run-sequence');
@@ -107,10 +107,9 @@ gulp.task('lint-test', function () {
  * Lint all custom TypeScript files.
  */
 gulp.task('ts-lint', function () {
-  return;
-  //return gulp.src(config.allTypeScript)
-  //    .pipe(tslint())
-  //    .pipe(tslint.report('prose'));
+  return gulp.src(config.allTypeScript)
+     .pipe(tslint())
+     .pipe(tslint.report('prose'));
 });
 
 /**

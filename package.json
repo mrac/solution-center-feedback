@@ -39,6 +39,7 @@
     "karma-jasmine": "^0.1.5",
     "mversion": "^1.6.0",
     "run-sequence": "^1.2.1"
+    "tslint": "^3.10.2"
   },
   "directories": {},
   "homepage": "https://github.com/zalando-incubator/solution-center-feedback",
