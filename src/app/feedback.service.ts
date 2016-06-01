@@ -1,12 +1,9 @@
 angular.module('solutioncenter.feedback')
     .factory('scFeedbackService',
-        [
-          function () {
+        [function () {
             'use strict';
 
-            var submitFeedback = function() {
-
-            };
+            let submitFeedback = () => {};
 
             return {
               submitFeedback: submitFeedback
