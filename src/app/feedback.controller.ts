@@ -4,9 +4,9 @@ angular.module('solutioncenter.feedback')
           function (scFeedbackService, $cookies, $timeout) {
             'use strict';
 
-            var FEEDBACK_COOKIE_NAME = 'SC_FEEDBACK';
+            let FEEDBACK_COOKIE_NAME = 'SC_FEEDBACK';
 
-            var vm = this;
+            let vm = this;
 
             vm.isMinified = $cookies.get(FEEDBACK_COOKIE_NAME) === 'true' || false;
             vm.hoverRating = 0;
@@ -14,39 +14,32 @@ angular.module('solutioncenter.feedback')
             vm.submitted = false;
             vm.hidden = false;
 
-            vm.submitFeedback = function () {
-              var feedback = {
+            vm.submitFeedback = () => {
+              let feedback = {
                 rating: vm.rating,
                 comment: vm.comment
               };
 
               scFeedbackService.submitFeedback(feedback)
                   .then(
-                      function () {
+                      () => {
                         vm.submitted = true;
-
-                        $timeout(function () {
-                          vm.hidden = true;
-                        }, 5000);
+                        $timeout(() => vm.hidden = true, 5000);
                       },
-                      function () {
-
-                      }
+                      () => {}
                   );
             };
 
-            vm.toggleMenu = function () {
+            vm.toggleMenu = () => {
               vm.isMinified = !vm.isMinified;
               $cookies.put(FEEDBACK_COOKIE_NAME, vm.isMinified);
             };
 
-            vm.setRating = function (newRating) {
+            vm.setRating = (newRating) => {
               vm.rating = newRating;
               vm.hoverRating = newRating;
             };
 
-            vm.updateRating = function (newRating) {
-              vm.hoverRating = (newRating === 0) ? vm.rating : newRating;
-            };
+            vm.updateRating = newRating => vm.hoverRating = (newRating === 0) ? vm.rating : newRating;
           }
         ]);

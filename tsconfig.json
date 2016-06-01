@@ -1,0 +1,9 @@
+{
+  "files": [
+    "typings/index.d.ts"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "sourceMap": true
+  }
+}

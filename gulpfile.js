@@ -1,21 +1,28 @@
-var fs = require('fs');
-var connect = require('gulp-connect');
-var gulp = require('gulp');
-var karma = require('karma').server;
-var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var es = require('event-stream');
-var del = require('del');
-var uglify = require('gulp-uglify');
-var minifyHtml = require('gulp-minify-html');
-var minifyCSS = require('gulp-minify-css');
-var templateCache = require('gulp-angular-templatecache');
-var plumber = require('gulp-plumber');
-var open = require('gulp-open');
-var sass = require('gulp-sass');
-var order = require("gulp-order");
-var flatten = require("gulp-flatten");
-var eslint = require('gulp-eslint');
+var fs = require('fs'),
+    connect = require('gulp-connect'),
+    gulp = require('gulp'),
+    karma = require('karma').server,
+    concat = require('gulp-concat'),
+    rename = require('gulp-rename'),
+    es = require('event-stream'),
+    del = require('del'),
+    uglify = require('gulp-uglify'),
+    minifyHtml = require('gulp-minify-html'),
+    minifyCSS = require('gulp-minify-css'),
+    templateCache = require('gulp-angular-templatecache'),
+    plumber = require('gulp-plumber'),
+    open = require('gulp-open'),
+    sass = require('gulp-sass'),
+    order = require("gulp-order"),
+    flatten = require("gulp-flatten"),
+    eslint = require('gulp-eslint'),
+    tsc = require('gulp-typescript'),
+    //tslint = require('gulp-tslint'),
+    tsProject = tsc.createProject('tsconfig.json'),
+    sourcemaps = require('gulp-sourcemaps'),
+    GulpConfig = require('./gulpfile.config');
+
+var config = new GulpConfig();
 
 gulp.task('connect', function () {
   connect.server({
@@ -25,24 +32,19 @@ gulp.task('connect', function () {
   });
 });
 
+gulp.task('open', function () {
+  gulp.src(config.demo + 'demo.html')
+      .pipe(open('', {url: 'http://localhost:3500/demo/demo.html'}));
+});
+
 gulp.task('html', function () {
-  gulp.src(['./demo/*.html', 'src/*.html'])
+  gulp.src([config.demo + '*.html', config.allHtml])
       .pipe(connect.reload());
-});
-
-gulp.task('watch', function () {
-  gulp.watch(['./demo/**/*.html'], ['html']);
-  gulp.watch(['./**/*.scss'], ['build']);
-  gulp.watch(['./src/**/*.js', './demo/**/*.js', './**/*.html'], ['build']);
-});
-
-gulp.task('clean', function (cb) {
-  del(['dist'], cb);
 });
 
 gulp.task('scripts', function () {
   function buildTemplates() {
-    return gulp.src('src/**/*.html')
+    return gulp.src(config.allHtml)
         .pipe(minifyHtml({
           empty: true,
           spare: true,
@@ -52,7 +54,7 @@ gulp.task('scripts', function () {
   };
 
   function buildDistJS() {
-    return gulp.src('src/**/*.js')
+    return gulp.src(config.allJavaScript)
         .pipe(plumber({
           errorHandler: handleError
         }));
@@ -74,48 +76,80 @@ gulp.task('scripts', function () {
       .pipe(connect.reload());
 });
 
-
 gulp.task('styles', function () {
-  return gulp.src('src/*.scss')
+  return gulp.src(config.sourceStyles + '**/*.scss')
       .pipe(sass().on('error', sass.logError))
       .pipe(concat('solutioncenter.feedback.css'))
-      .pipe(gulp.dest('dist'))
+      .pipe(gulp.dest(config.distribution))
       .pipe(minifyCSS())
       .pipe(rename({suffix: '.min'}))
-      .pipe(gulp.dest('dist'))
+      .pipe(gulp.dest(config.distribution))
       .pipe(connect.reload());
 });
 
-gulp.task('images', function () {
-  return gulp.src('src/img/*')
-      .pipe(gulp.dest('dist/img/'))
-      .pipe(connect.reload());
-});
-
-gulp.task('fonts', function () {
-  return gulp.src('bower_components/dress-code/**/*.{eot,ttf,woff}')
-      .pipe(flatten())
-      .pipe(gulp.dest('dist/fonts/'))
-      .pipe(connect.reload());
-});
-
-gulp.task('open', function () {
-  gulp.src('./demo/demo.html')
-      .pipe(open('', {url: 'http://localhost:3500/demo/demo.html'}));
-});
-
-gulp.task('lint', function () {
-  return gulp.src('src/*.js')
+/**
+ * Lint all custom JavaScript files.
+ */
+gulp.task('js-lint', function () {
+  return gulp.src(config.allJavaScript)
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failAfterError());
 });
 
 gulp.task('lint-test', function () {
-  return gulp.src('./test/**/*.js')
+  return gulp.src(config.tests + '**/*.js')
       .pipe(eslint());
 });
 
+/**
+ * Lint all custom TypeScript files.
+ */
+gulp.task('ts-lint', function () {
+  return;
+  //return gulp.src(config.allTypeScript)
+  //    .pipe(tslint())
+  //    .pipe(tslint.report('prose'));
+});
+
+/**
+ * Compile TypeScript and include references to library and app .d.ts files.
+ */
+gulp.task('compile-ts', function () {
+  var sourceTsFiles = [config.allTypeScript, config.libraryTypeScriptDefinitions];
+
+  var tsResult = gulp.src(sourceTsFiles)
+      .pipe(sourcemaps.init())
+      .pipe(tsc(tsProject));
+
+  tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
+  return tsResult.js
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest(config.tsOutputPath));
+});
+
+gulp.task('watch', function () {
+  gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
+  gulp.watch([config.demo + '**/*.html'], ['html']);
+  gulp.watch(['./**/*.scss'], ['build']);
+  gulp.watch([config.source + '**/*.js', config.demo + '**/*.js', './**/*.html'], ['build']);
+});
+
+/**
+ * Removes the distribution files and all generated JavaScript files from TypeScript compilation.
+ */
+gulp.task('clean', function (cb) {
+  var filesToClean = [
+    config.distribution,
+    config.tsOutputPath
+  ];
+
+  del(filesToClean, cb);
+});
+
+/**
+ * KARMA TESTS
+ */
 gulp.task('karma', ['build'], function (done) {
   karma.start({
     configFile: __dirname + '/karma.conf.js',
@@ -135,8 +169,8 @@ function handleError(err) {
   this.emit('end');
 };
 
-gulp.task('build', ['lint', 'scripts', 'styles', 'fonts', 'images']);
+//gulp.task('build', ['ts-lint', 'compile-ts', 'scripts', 'styles']);
+gulp.task('build', ['ts-lint', 'compile-ts', 'scripts', 'styles']);
 gulp.task('serve', ['build', 'connect', 'watch', 'open']);
-gulp.task('default', ['build', 'test']);
 gulp.task('test', ['build', 'lint-test', 'karma']);
 gulp.task('serve-test', ['build', 'watch', 'lint-test', 'karma-serve']);
