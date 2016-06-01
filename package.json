@@ -65,7 +65,8 @@
   },
   "main": "dist/solution-center-feedback.js",
   "scripts": {
-    "test": "./node_modules/gulp/bin/gulp.js test"
+    "test": "gulp test",
+    "postinstall": "typings install"
   },
   "version": "0.0.1"
 }
