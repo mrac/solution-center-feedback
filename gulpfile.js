@@ -20,6 +20,7 @@ var fs = require('fs'),
     //tslint = require('gulp-tslint'),
     tsProject = tsc.createProject('tsconfig.json'),
     sourcemaps = require('gulp-sourcemaps'),
+    runSequence = require('run-sequence');
     GulpConfig = require('./gulpfile.config');
 
 var config = new GulpConfig();
@@ -167,9 +168,20 @@ gulp.task('karma-serve', ['build'], function (done) {
 function handleError(err) {
   console.log(err.toString());
   this.emit('end');
-};
+}
 
-gulp.task('build', ['ts-lint', 'compile-ts', 'scripts', 'styles']);
-gulp.task('serve', ['build', 'connect', 'watch', 'open']);
-gulp.task('test', ['build', 'lint-test', 'karma']);
-gulp.task('serve-test', ['build', 'watch', 'lint-test', 'karma-serve']);
+gulp.task('build', function(callback) {
+  runSequence('ts-lint', 'compile-ts', ['scripts', 'styles'], callback);
+});
+
+gulp.task('serve', function(callback) {
+  runSequence('build', 'connect', 'watch', 'open', callback);
+});
+
+gulp.task('test', function(callback) {
+  runSequence('build', 'lint-test', 'karma', callback);
+});
+
+gulp.task('serve-test', function(callback) {
+  runSequence('build', 'watch', 'lint-test', 'karma-serve', callback);
+});
