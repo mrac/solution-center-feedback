@@ -1,10 +1,23 @@
-'use strict';
+namespace solutioncenter.feedback {
 
-angular.module('solutioncenter.feedback')
-    .component('scFeedback', {
-      bindings: {
+  class ScFeedback implements ng.IComponentOptions {
+    static $inject = ['$templateCache'];
+
+    public bindings: any;
+    public controller: string;
+    public template: Function;
+
+    constructor(private $templateCache: ng.ITemplateCacheService) {
+      this.bindings = {
         module: '<'
-      },
-      controller: 'scFeedbackController',
-      template: ['$templateCache', $templateCache => $templateCache.get('feedback.html')]
-    });
+      };
+
+      this.controller = 'ScFeedbackController';
+      this.template = () => this.$templateCache.get('feedback.html');
+    }
+  }
+
+  angular
+    .module('solutioncenter.feedback')
+    .component('ScFeedback', ScFeedback);
+}

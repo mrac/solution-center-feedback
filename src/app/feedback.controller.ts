@@ -1,45 +1,78 @@
-angular.module('solutioncenter.feedback')
-    .controller('scFeedbackController',
-        ['scFeedbackService', '$cookies', '$timeout',
-          function (scFeedbackService, $cookies, $timeout) {
-            'use strict';
+namespace solutioncenter.feedback {
 
-            let FEEDBACK_COOKIE_NAME = 'SC_FEEDBACK';
+  interface ScFeedbackBindings {
+    module: any;
+  }
 
-            let vm = this;
+  interface IScFeedbackController extends ScFeedbackBindings {
+    isMinified: boolean;
+    hoverRating: number;
+    rating: number;
+    submitted: boolean;
+    hidden: boolean;
+    comment: string;
 
-            vm.isMinified = $cookies.get(FEEDBACK_COOKIE_NAME) === 'true' || false;
-            vm.hoverRating = 0;
-            vm.rating = 0;
-            vm.submitted = false;
-            vm.hidden = false;
+    submitFeedback(): void;
+    toggleMenu(): void;
+    setRating(newRating: number): void;
+    updateRating(newRating: number): void;
+  }
 
-            vm.submitFeedback = () => {
-              let feedback = {
-                rating: vm.rating,
-                comment: vm.comment
-              };
+  class ScFeedbackController implements IScFeedbackController {
+    static $inject = ['scFeedbackService', '$cookies', '$timeout'];
 
-              scFeedbackService.submitFeedback(feedback)
-                  .then(
-                      () => {
-                        vm.submitted = true;
-                        $timeout(() => vm.hidden = true, 5000);
-                      },
-                      () => {}
-                  );
-            };
+    private FEEDBACK_COOKIE_NAME: string = 'SC_FEEDBACK';
 
-            vm.toggleMenu = () => {
-              vm.isMinified = !vm.isMinified;
-              $cookies.put(FEEDBACK_COOKIE_NAME, vm.isMinified);
-            };
+    public module: any;
 
-            vm.setRating = (newRating) => {
-              vm.rating = newRating;
-              vm.hoverRating = newRating;
-            };
+    public isMinified: boolean;
+    public hoverRating: number;
+    public rating: number;
+    public submitted: boolean;
+    public hidden: boolean;
+    public comment: string;
 
-            vm.updateRating = newRating => vm.hoverRating = (newRating === 0) ? vm.rating : newRating;
+    constructor(private ScFeedbackService: ScFeedbackService, private $cookies: ng.cookies.ICookiesService, private $timeout: ng.ITimeoutService) {
+      this.isMinified = this.$cookies.get(this.FEEDBACK_COOKIE_NAME) === 'true' || false;
+      this.hoverRating = 0;
+      this.rating = 0;
+      this.submitted = false;
+      this.hidden = false;
+    }
+
+    submitFeedback(): void {
+      let feedback = {
+        rating: this.rating,
+        comment: this.comment
+      };
+
+      this.ScFeedbackService.submitFeedback(feedback)
+        .then(
+          (result: ng.IHttpPromiseCallbackArg<{}>) => {
+            this.submitted = true;
+            this.$timeout(() => this.hidden = true, 5000);
+          },
+          (result: ng.IHttpPromiseCallbackArg<{}>) => {
           }
-        ]);
+        );
+    };
+
+    toggleMenu(): void {
+      this.isMinified = !this.isMinified;
+      this.$cookies.put(this.FEEDBACK_COOKIE_NAME, this.isMinified.toString());
+    };
+
+    setRating(newRating: number): void {
+      this.rating = newRating;
+      this.hoverRating = newRating;
+    };
+
+    updateRating(newRating: number): void {
+      this.hoverRating = (newRating === 0) ? this.rating : newRating;
+    };
+  }
+
+  angular
+    .module('solutioncenter.feedback')
+    .controller('ScFeedbackController', ScFeedbackController);
+}
