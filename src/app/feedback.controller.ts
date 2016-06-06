@@ -1,24 +1,10 @@
 namespace solutioncenter.feedback {
 
-  interface ScFeedbackBindings {
+  interface IScFeedbackBindings {
     module: any;
   }
 
-  interface IScFeedbackController extends ScFeedbackBindings {
-    isMinified: boolean;
-    hoverRating: number;
-    rating: number;
-    submitted: boolean;
-    hidden: boolean;
-    comment: string;
-
-    submitFeedback(): void;
-    toggleMenu(): void;
-    setRating(newRating: number): void;
-    updateRating(newRating: number): void;
-  }
-
-  class ScFeedbackController implements IScFeedbackController {
+  class ScFeedbackController implements IScFeedbackBindings {
     static $inject = ['scFeedbackService', '$cookies', '$timeout'];
 
     private FEEDBACK_COOKIE_NAME: string = 'SC_FEEDBACK';
@@ -32,7 +18,7 @@ namespace solutioncenter.feedback {
     public hidden: boolean;
     public comment: string;
 
-    constructor(private ScFeedbackService: ScFeedbackService, private $cookies: ng.cookies.ICookiesService, private $timeout: ng.ITimeoutService) {
+    constructor(private $cookies: ng.cookies.ICookiesService, private $timeout: ng.ITimeoutService, private ScFeedbackService: ScFeedbackService) {
       this.isMinified = this.$cookies.get(this.FEEDBACK_COOKIE_NAME) === 'true' || false;
       this.hoverRating = 0;
       this.rating = 0;
@@ -74,5 +60,7 @@ namespace solutioncenter.feedback {
 
   angular
     .module('solutioncenter.feedback')
-    .controller('ScFeedbackController', ScFeedbackController);
+    .controller('ScFeedbackController',
+      ['$cookies', '$timeout', 'ScFeedbackService',
+        ($cookies, $timeout, ScFeedbackService) => new ScFeedbackController ($cookies, $timeout, ScFeedbackService)]);
 }

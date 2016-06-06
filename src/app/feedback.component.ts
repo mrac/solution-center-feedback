@@ -5,7 +5,7 @@ namespace solutioncenter.feedback {
 
     public bindings: any;
     public controller: string;
-    public template: Function;
+    public template: Function | string;
 
     constructor(private $templateCache: ng.ITemplateCacheService) {
       this.bindings = {
@@ -13,11 +13,13 @@ namespace solutioncenter.feedback {
       };
 
       this.controller = 'ScFeedbackController';
-      this.template = () => this.$templateCache.get('feedback.html');
+      // this.template = () => this.$templateCache.get('feedback.html');
+      this.template = '<div>Test</div>';
     }
   }
 
   angular
     .module('solutioncenter.feedback')
-    .component('ScFeedback', ScFeedback);
+    .component('ScFeedback',
+      ['$templateCache', $templateCache => new ScFeedback($templateCache)]);
 }

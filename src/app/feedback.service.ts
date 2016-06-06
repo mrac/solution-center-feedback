@@ -1,10 +1,6 @@
 namespace solutioncenter.feedback {
 
-  export interface IScFeedbackService {
-    submitFeedback(feedback: any): ng.IPromise <{}>;
-  }
-
-  export class ScFeedbackService implements IScFeedbackService {
+  export class ScFeedbackService {
     constructor(private $q: ng.IQService /*private $http: ng.IHttpService*/) {
 
     }
@@ -18,5 +14,6 @@ namespace solutioncenter.feedback {
 
   angular
     .module('solutioncenter.feedback')
-    .service('ScFeedbackService', ScFeedbackService);
+    .service('ScFeedbackService',
+      ['$q', $q => new ScFeedbackService($q)]);
 }
