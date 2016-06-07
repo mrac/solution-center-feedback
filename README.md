@@ -3,6 +3,8 @@ Feedback tool which allows users to rate the services provided by the Solution C
 
 [![Build Status](https://travis-ci.org/zalando/solution-center-feedback.svg?branch=master)](https://travis-ci.org/zalando/solution-center-feedback)
 
+[Changelog](CHANGELOG.md)
+
 ### Installation
 
 Install via bower

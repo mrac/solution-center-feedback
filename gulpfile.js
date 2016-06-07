@@ -19,7 +19,8 @@ var fs = require('fs'),
     tslint = require('gulp-tslint'),
     tsProject = tsc.createProject('tsconfig.json'),
     sourcemaps = require('gulp-sourcemaps'),
-    runSequence = require('run-sequence');
+    conventionalChangelog = require('gulp-conventional-changelog'),
+    runSequence = require('run-sequence'),
     GulpConfig = require('./gulpfile.config');
 
 var config = new GulpConfig();
@@ -161,6 +162,16 @@ gulp.task('karma-serve', ['build'], function (done) {
     configFile: __dirname + '/karma.conf.js',
     singleRun: false
   }, done);
+});
+
+gulp.task('changelog', function() {
+  return gulp.src('CHANGELOG.md', {
+      buffer: true
+    })
+    .pipe(conventionalChangelog({
+      preset: 'angular'
+    }))
+    .pipe(gulp.dest('./'));
 });
 
 function handleError(err) {
