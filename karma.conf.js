@@ -11,11 +11,11 @@ module.exports = function(config) {
     files: [
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
-      'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-mocks/angular-mocks.js',
 
-      'dist/solution-center-feedback.js',
-      'dist/solution-center-feedback.css',
+      'dist/solutioncenter.feedback.js',
+      'dist/solutioncenter.feedback.css',
       'test/**/*.spec.js'
     ],
 
