@@ -14,6 +14,5 @@ namespace solutioncenter.feedback {
 
   angular
     .module('solutioncenter.feedback')
-    .service('ScFeedbackService',
-      ['$q', $q => new ScFeedbackService($q)]);
+    .service('ScFeedbackService', ScFeedbackService);
 }
