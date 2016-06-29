@@ -18,9 +18,9 @@ namespace solutioncenter.feedback {
     public hidden: boolean;
     public comment: string;
 
-    constructor(private $cookies: ng.cookies.ICookiesService,
-                private $timeout: ng.ITimeoutService,
-                private ScFeedbackService: ScFeedbackService) {
+    constructor(private ScFeedbackService: ScFeedbackService,
+                private $cookies: ng.cookies.ICookiesService,
+                private $timeout: ng.ITimeoutService) {
       this.isMinified = this.$cookies.get(this.FEEDBACK_COOKIE_NAME) === 'true' || false;
       this.hoverRating = 0;
       this.rating = 0;
@@ -63,6 +63,7 @@ namespace solutioncenter.feedback {
   angular
     .module('solutioncenter.feedback')
     .controller('ScFeedbackController',
-      ['$cookies', '$timeout', 'ScFeedbackService',
-        ($cookies, $timeout, ScFeedbackService) => new ScFeedbackController($cookies, $timeout, ScFeedbackService)]);
+      ['ScFeedbackService', '$cookies', '$timeout',
+        (ScFeedbackService, $cookies, $timeout) =>
+          new ScFeedbackController(ScFeedbackService, $cookies, $timeout)]);
 }
