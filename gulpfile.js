@@ -21,9 +21,21 @@ var fs = require('fs'),
     sourcemaps = require('gulp-sourcemaps'),
     conventionalChangelog = require('gulp-conventional-changelog'),
     runSequence = require('run-sequence'),
+    header = require('gulp-header'),
     GulpConfig = require('./gulpfile.config');
 
 var config = new GulpConfig();
+
+var projectInfo = {
+  pkg : JSON.parse(fs.readFileSync('./package.json')),
+  banner:
+  '/*!\n' +
+  ' * Name: <%= pkg.name %>\n' +
+  ' * Version: <%= pkg.version %>\n' +
+  ' * Homepage: <%= pkg.homepage %>\n' +
+  ' * License: <%= pkg.license %>\n' +
+  ' */\n\n\n'
+};
 
 gulp.task('connect', function () {
   connect.server({
@@ -70,6 +82,9 @@ gulp.task('scripts', function () {
         'template.js'
       ]))
       .pipe(concat('solutioncenter.feedback.js'))
+      .pipe(header(projectInfo.banner, {
+        pkg: projectInfo.pkg
+      }))
       .pipe(gulp.dest('dist'))
       .pipe(rename({suffix: '.min'}))
       .pipe(uglify({preserveComments: 'some'}))
