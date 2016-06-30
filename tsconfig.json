@@ -3,6 +3,8 @@
     "typings/index.d.ts"
   ],
   "compilerOptions": {
-    "target": "es5"
+    "target": "es5",
+    "sourceMap": true,
+    "inlineSourceMap": true
   }
 }

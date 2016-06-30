@@ -4,22 +4,23 @@ namespace solutioncenter.feedback {
 
     public bindings: any;
     public controller: any;
-    public template: Function | string;
+    public controllerAs: string;
+    public templateUrl: string;
 
-    constructor() {
+    constructor()  {
       this.bindings = {
         module: '<'
       };
 
       this.controller = ScFeedbackController;
-      // this.template = 'feedback.html';
-      this.template = '<div>Test</div>';
+      this.controllerAs = 'ScFeedbackCtrl';
+      this.templateUrl = 'feedback.html';
     }
   }
 
   angular
     .module('solutioncenter.feedback')
-    .component('ScFeedback', new ScFeedback());
+    .component('scFeedback', new ScFeedback());
 }
 
 

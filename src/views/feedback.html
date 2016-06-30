@@ -1,54 +1,53 @@
-<div class="solution-center-feedback" ng-if="$ctrl.isMinified === false"
-     ng-class="{'solution-center-feedback--opened': $ctrl.hidden === false,
-                'solution-center-feedback--closed': $ctrl.hidden}">
+<div class="solution-center-feedback" ng-if="ScFeedbackCtrl.isMinified === false"
+     ng-class="{'solution-center-feedback--opened': ScFeedbackCtrl.hidden === false,
+                'solution-center-feedback--closed': ScFeedbackCtrl.hidden}">
 
-    <div class="feedback__title feedback__block" ng-if="$ctrl.submitted === false">
-        <div class="feedback__title--upper">
-            We value your opinion
-        </div>
-        <div class="feedback__title--lower">
-            How do you rate {{$ctrl.module.name}}?
-        </div>
+  <div class="feedback__title feedback__block" ng-if="ScFeedbackCtrl.submitted === false">
+    <div class="feedback__title--upper">
+      We value your opinion
+    </div>
+    <div class="feedback__title--lower">
+      How do you rate {{ScFeedbackCtrl.module.name}}?
+    </div>
+  </div>
+
+  <div class="feedback__rating feedback__block" ng-if="ScFeedbackCtrl.submitted === false">
+    <div class="feedback__rating__stars">
+      <ng-repeat ng-repeat="i in [5,4,3,2,1]">
+        <input type="radio" id="star-{{i}}" class="feedback__rating__input">
+        <label for="star-{{i}}" class="feedback__rating__star"
+               ng-class="{colored: ScFeedbackCtrl.rating >= i || ScFeedbackCtrl.hoverRating >= i}"
+               ng-click="ScFeedbackCtrl.setRating(i)"
+               ng-mouseenter="ScFeedbackCtrl.updateRating(i)"
+               ng-mouseleave="ScFeedbackCtrl.updateRating(0)">
+        </label>
+      </ng-repeat>
     </div>
 
-    <div class="feedback__rating feedback__block" ng-if="$ctrl.submitted === false">
-        <div class="feedback__rating__stars">
-            <ng-repeat ng-repeat="i in [5,4,3,2,1]">
-                <input type="radio" id="star-{{i}}" class="feedback__rating__input">
-                <label for="star-{{i}}" class="feedback__rating__star"
-                       ng-class="{colored: $ctrl.rating >= i || $ctrl.hoverRating >= i}"
-                       ng-click="$ctrl.setRating(i)"
-                       ng-mouseenter="$ctrl.updateRating(i)"
-                       ng-mouseleave="$ctrl.updateRating(0)">
-                </label>
-            </ng-repeat>
-        </div>
+    <span class="feedback__rating__score">{{ScFeedbackCtrl.rating}}/5</span>
+  </div>
 
-        <span class="feedback__rating__score">{{$ctrl.rating}}/5</span>
-    </div>
+  <div class="feedback__comment feedback__block" ng-if="ScFeedbackCtrl.submitted === false">
+    <input ng-model="ScFeedbackCtrl.comment" class="dc-input" type="text" placeholder="Leave a comment (optional)"/>
 
-    <div class="feedback__comment feedback__block" ng-if="$ctrl.submitted === false">
-        <input ng-model="$ctrl.comment" class="dc-input" type="text" placeholder="Leave a comment (optional)"/>
+    <button class="dc-btn" ng-class="{'dc-btn--primary': ScFeedbackCtrl.rating !== 0, 'dc-btn--disabled': ScFeedbackCtrl.rating === 0}"
+            ng-click="ScFeedbackCtrl.submitFeedback()">Submit</button>
+  </div>
 
-        <button class="dc-btn" ng-class="{'dc-btn--primary': $ctrl.rating !== 0, 'dc-btn--disabled': $ctrl.rating === 0}"
-                ng-click="$ctrl.submitFeedback()">Submit</button>
-    </div>
+  <div class="feedback__later feedback__block" ng-if="ScFeedbackCtrl.submitted === false">
+    <span class="dc-text" ng-click="ScFeedbackCtrl.toggleMenu()">Answer later</span>
+  </div>
 
-    <div class="feedback__later feedback__block" ng-if="$ctrl.submitted === false">
-        <span class="dc-text" ng-click="$ctrl.toggleMenu()">Answer later</span>
-    </div>
-
-    <div class="feedback__submitted" ng-if="$ctrl.submitted">
-        <span class="dc-text">Thanks!</span>
-    </div>
+  <div class="feedback__submitted" ng-if="ScFeedbackCtrl.submitted">
+    <span class="dc-text">Thanks!</span>
+  </div>
 
 </div>
 
-<div class="solution-center-feedback solution-center-feedback--minified" ng-if="$ctrl.isMinified">
-    <div class="feedback__opener" ng-click="$ctrl.toggleMenu()">
-        Rate {{$ctrl.module.name}}
-    </div>
+<div class="solution-center-feedback solution-center-feedback--minified" ng-if="ScFeedbackCtrl.isMinified">
+  <div class="feedback__opener" ng-click="ScFeedbackCtrl.toggleMenu()">
+    Rate {{ScFeedbackCtrl.module.name}}
+  </div>
 
-    <div class="feedback__opener__bottom-bar"></div>
+  <div class="feedback__opener__bottom-bar"></div>
 </div>
-
