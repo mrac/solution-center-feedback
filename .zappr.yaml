@@ -14,6 +14,5 @@ approvals:
     # OR a collaborator of the repo
     collaborators: true
 
-autobranch:
-  pattern: {number}-{title}
-  length: 60
+X-Zalando-Team: "norris"
+X-Zalando-Type: "code"
