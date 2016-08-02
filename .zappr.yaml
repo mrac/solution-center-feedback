@@ -8,9 +8,9 @@ approvals:
   from:
     # commenter must be either one of:
     orgs:
-      # a member of norris organization
+      # a member of zalando organization
       # (any org in here counts)
-      - norris
+      - "zalando"
     # OR a collaborator of the repo
     collaborators: true
 
