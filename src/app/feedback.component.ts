@@ -14,7 +14,7 @@ namespace solutioncenter.feedback {
 
       this.controller = ScFeedbackController;
       this.controllerAs = 'ScFeedbackCtrl';
-      this.templateUrl = 'feedback.html';
+      this.templateUrl = '/src/views/feedback.html';
     }
   }
 

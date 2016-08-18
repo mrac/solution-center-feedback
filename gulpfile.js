@@ -9,7 +9,6 @@ var fs = require('fs'),
     uglify = require('gulp-uglify'),
     minifyHtml = require('gulp-minify-html'),
     minifyCSS = require('gulp-minify-css'),
-    templateCache = require('gulp-angular-templatecache'),
     plumber = require('gulp-plumber'),
     open = require('gulp-open'),
     sass = require('gulp-sass'),
@@ -50,47 +49,42 @@ gulp.task('open', function () {
       .pipe(open('', {url: 'http://localhost:3500/demo/demo.html'}));
 });
 
-gulp.task('html', function () {
-  gulp.src([config.demo + '*.html', config.allHtml])
-      .pipe(connect.reload());
-});
+function html() {
+  return gulp.src(config.allHtml)
+    .pipe(minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
+    .pipe(gulp.dest('./dist'))
+    .pipe(connect.reload());
+};
 
-gulp.task('scripts', function () {
-  function buildTemplates() {
-    return gulp.src(config.allHtml)
-        .pipe(minifyHtml({
-          empty: true,
-          spare: true,
-          quotes: true
-        }))
-        .pipe(templateCache({module: 'solutioncenter.feedback'}));
-  };
+gulp.task('html', html);
 
-  function buildDistJS() {
-    return gulp.src(config.allJavaScript)
-        .pipe(plumber({
-          errorHandler: handleError
-        }));
-  };
+function buildDistJS() {
+  return gulp.src(config.allJavaScript)
+    .pipe(order([
+      'solutioncenter.feedback.js',
+      'feedback.component.js',
+      'feedback.controller.js',
+      'feedback.service.js',
+    ]))
+    .pipe(plumber({
+      errorHandler: handleError
+    }))
+    .pipe(concat('solutioncenter.feedback.js'))
+    .pipe(header(projectInfo.banner, {
+      pkg: projectInfo.pkg
+    }))
+    .pipe(gulp.dest('dist'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(uglify({preserveComments: 'some'}))
+    .pipe(gulp.dest('./dist'))
+    .pipe(connect.reload());
+};
 
-  es.merge(buildDistJS(), buildTemplates())
-      .pipe(plumber({
-        errorHandler: handleError
-      }))
-      .pipe(order([
-        'solutioncenter.feedback.js',
-        'template.js'
-      ]))
-      .pipe(concat('solutioncenter.feedback.js'))
-      .pipe(header(projectInfo.banner, {
-        pkg: projectInfo.pkg
-      }))
-      .pipe(gulp.dest('dist'))
-      .pipe(rename({suffix: '.min'}))
-      .pipe(uglify({preserveComments: 'some'}))
-      .pipe(gulp.dest('./dist'))
-      .pipe(connect.reload());
-});
+gulp.task('scripts', buildDistJS);
 
 gulp.task('styles', function () {
   return gulp.src(config.sourceStyles + '**/*.scss')
@@ -195,7 +189,7 @@ function handleError(err) {
 }
 
 gulp.task('build', function(callback) {
-  runSequence('ts-lint', 'compile-ts', ['scripts', 'styles'], callback);
+  runSequence('ts-lint', 'compile-ts', ['scripts', 'html', 'styles'], callback);
 });
 
 gulp.task('serve', function(callback) {
