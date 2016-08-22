@@ -1,8 +1,21 @@
 {
-  "files": [
-    "typings/index.d.ts"
-  ],
+  "compileOnSave": false,
   "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "mapRoot": "/",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "inlineSources": true,
     "target": "es5"
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

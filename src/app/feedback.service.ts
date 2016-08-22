@@ -1,12 +1,6 @@
-angular.module('solutioncenter.feedback')
-    .factory('scFeedbackService',
-        [function () {
-            'use strict';
+export class ScFeedbackService {
 
-            let submitFeedback = () => {};
-
-            return {
-              submitFeedback: submitFeedback
-            };
-          }
-        ]);
+  static submit(): boolean {
+    return true;
+  }
+}
