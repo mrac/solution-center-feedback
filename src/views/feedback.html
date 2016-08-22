@@ -1,13 +1,79 @@
+<!-- if not minified -->
 <div ng-if="!$ctrl.isMinified"
-     ng-class="{'solution-center-feedback--opened': !$ctrl.hidden,
-                'solution-center-feedback--closed': $ctrl.hidden}"
-     class="solution-center-feedback">
-  Feedback is Displayed
-  <div ng-if="!$ctrl.submitted"
-       class="feedback__later feedback__block">
-    <span ng-click="$ctrl.toggle()"
-          class="dc-text">
-      Answer later
+     class="solution-center-feedback"
+     ng-class="{ 'solution-center-feedback--opened': !$ctrl.hidden,
+                 'solution-center-feedback--closed': $ctrl.hidden }">
+
+  <!-- if not yet submitted -->
+  <div ng-if="!$ctrl.submitted">
+
+    <!-- how do you rate this app -->
+    <div class="feedback__title feedback__block">
+      <div class="feedback__title--upper">
+        We value your opinion
+      </div>
+      <div class="feedback__title--lower">
+        How do you rate {{ $ctrl.module.name }}?
+      </div>
+    </div>
+
+    <!-- feedback star rating -->
+    <div class="feedback__rating feedback__block">
+      <div class="feedback__rating__stars">
+        <ng-repeat ng-repeat="i in [5,4,3,2,1]">
+          <input type="radio" id="star-{{i}}" class="feedback__rating__input">
+          <label for="star-{{i}}" class="feedback__rating__star"
+                 ng-class="{ colored: $ctrl.rating.actual >= i || $ctrl.rating.hover >= i }"
+                 ng-click="$ctrl.rate(i)"
+                 ng-mouseenter="$ctrl.update(i)"
+                 ng-mouseleave="$ctrl.update(0)">
+          </label>
+        </ng-repeat>
+      </div>
+      <span class="feedback__rating__score">
+        {{ $ctrl.rating.actual }}/5
+      </span>
+    </div>
+
+    <!-- submit feedback -->
+    <div class="feedback__comment feedback__block">
+      <input ng-model="$ctrl.comment"
+             type="text"
+             class="dc-input"
+             placeholder="Leave a comment (optional)">
+      <button ng-click="$ctrl.submit()"
+              class="dc-btn"
+              ng-class="{ 'dc-btn--primary': $ctrl.rating.actual !== 0,
+                          'dc-btn--disabled': $ctrl.rating === 0 }">
+        Submit
+      </button>
+    </div>
+
+    <!-- answer later -->
+    <div class="feedback__later feedback__block">
+      <span ng-click="$ctrl.toggle()"
+            class="dc-text">
+        Answer later
+      </span>
+    </div>
+  </div>
+
+  <!-- thank you message -->
+  <div ng-if="$ctrl.submitted"
+       class="feedback__submitted">
+    <span class="dc-text">
+      Thanks!
     </span>
   </div>
+
+</div>
+
+<!-- if minified -->
+<div ng-if="$ctrl.isMinified"
+     class="solution-center-feedback solution-center-feedback--minified">
+  <div ng-click="$ctrl.toggle()"
+       class="feedback__opener">
+    Rate {{ $ctrl.module.name }}
+  </div>
+  <div class="feedback__opener__bottom-bar"></div>
 </div>
