@@ -5,12 +5,23 @@ const COOKIE_NAME = 'SC_FEEDBACK';
 export class ScFeedbackController {
   static $inject: Array<string> = ['$cookies'];
 
-  isMinified: any;
+  // TEMP
+  module: any = {
+    id: 0,
+    name: 'Solution Center'
+  };
+
+  isMinified: boolean = false;
   hidden: boolean = false;
   submitted: boolean = false;
+  comment: string = '';
+  rating: any = {
+    actual: 0,
+    hover: 0
+  };
 
   constructor(private $cookies: ng.cookies.ICookiesService) {
-    this.isMinified = this.$cookies.get(COOKIE_NAME) || false;
+    this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
   }
 
   submit(): void {
@@ -19,6 +30,15 @@ export class ScFeedbackController {
 
   toggle(): void {
     this.isMinified = !this.isMinified;
-    this.$cookies.put(COOKIE_NAME, this.isMinified);
+    this.$cookies.put(COOKIE_NAME, this.isMinified.toString());
+  }
+
+  rate(rating: number): void {
+    this.rating.actual = rating;
+    this.rating.hover = rating;
+  }
+
+  update(rating: number): void {
+    this.rating.hover = (rating === 0 && this.rating.actual) || rating;
   }
 }
