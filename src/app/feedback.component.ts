@@ -1,10 +1,9 @@
-'use strict';
+import { ScFeedbackController } from './feedback.controller';
 
-angular.module('solutioncenter.feedback')
-    .component('scFeedback', {
-      bindings: {
-        module: '<'
-      },
-      controller: 'scFeedbackController',
-      template: ['$templateCache', $templateCache => $templateCache.get('feedback.html')]
-    });
+const selector = 'scFeedback';
+const config: ng.IComponentOptions = {
+  template: require('../views/feedback.html'),
+  controller: ScFeedbackController
+};
+
+export { selector, config };

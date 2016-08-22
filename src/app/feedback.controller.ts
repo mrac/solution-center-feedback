@@ -1,45 +1,24 @@
-angular.module('solutioncenter.feedback')
-    .controller('scFeedbackController',
-        ['scFeedbackService', '$cookies', '$timeout',
-          function (scFeedbackService, $cookies, $timeout) {
-            'use strict';
+import { ScFeedbackService } from './feedback.service';
 
-            let FEEDBACK_COOKIE_NAME = 'SC_FEEDBACK';
+const COOKIE_NAME = 'SC_FEEDBACK';
 
-            let vm = this;
+export class ScFeedbackController {
+  static $inject: Array<string> = ['$cookies'];
 
-            vm.isMinified = $cookies.get(FEEDBACK_COOKIE_NAME) === 'true' || false;
-            vm.hoverRating = 0;
-            vm.rating = 0;
-            vm.submitted = false;
-            vm.hidden = false;
+  isMinified: any;
+  hidden: boolean = false;
+  submitted: boolean = false;
 
-            vm.submitFeedback = () => {
-              let feedback = {
-                rating: vm.rating,
-                comment: vm.comment
-              };
+  constructor(private $cookies: ng.cookies.ICookiesService) {
+    this.isMinified = this.$cookies.get(COOKIE_NAME) || false;
+  }
 
-              scFeedbackService.submitFeedback(feedback)
-                  .then(
-                      () => {
-                        vm.submitted = true;
-                        $timeout(() => vm.hidden = true, 5000);
-                      },
-                      () => {}
-                  );
-            };
+  submit(): void {
+    this.submitted = ScFeedbackService.submit();
+  }
 
-            vm.toggleMenu = () => {
-              vm.isMinified = !vm.isMinified;
-              $cookies.put(FEEDBACK_COOKIE_NAME, vm.isMinified);
-            };
-
-            vm.setRating = (newRating) => {
-              vm.rating = newRating;
-              vm.hoverRating = newRating;
-            };
-
-            vm.updateRating = newRating => vm.hoverRating = (newRating === 0) ? vm.rating : newRating;
-          }
-        ]);
+  toggle(): void {
+    this.isMinified = !this.isMinified;
+    this.$cookies.put(COOKIE_NAME, this.isMinified);
+  }
+}

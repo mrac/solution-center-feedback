@@ -3,8 +3,6 @@ node_js:
   - 'stable'
 
 install:
-  - npm install -g gulp bower
-  - bower install
   - npm install
 
 before_script:
@@ -12,4 +10,4 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - npm run test
+  - npm test
