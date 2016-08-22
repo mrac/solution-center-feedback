@@ -1,6 +1,7 @@
 var loaders = require('./loaders');
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
@@ -23,6 +24,10 @@ module.exports = {
       inject: 'body',
       hash: true
     }),
+    new CopyWebpackPlugin([{
+      from: './node_modules/dress-code/dist/css/dress-code.min.css',
+      to: 'vendor'
+    }]),
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 8080,
