@@ -23,7 +23,7 @@ module.exports = {
       comments: false
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './demo/index.html',
       inject: 'body',
       hash: true
     }),
