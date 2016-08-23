@@ -4,11 +4,9 @@
      ng-class="{ 'solution-center-feedback--opened': !$ctrl.isAvailable,
                  'solution-center-feedback--closed': $ctrl.isAvailable }">
 
-  <!-- if not yet submitted -->
-  <div ng-if="!$ctrl.submitted">
-
     <!-- how do you rate this app -->
-    <div class="feedback__title feedback__block">
+    <div ng-if="!$ctrl.submitted"
+         class="feedback__title feedback__block">
       <div class="feedback__title--upper">
         We value your opinion
       </div>
@@ -18,7 +16,8 @@
     </div>
 
     <!-- feedback star rating -->
-    <div class="feedback__rating feedback__block">
+    <div ng-if="!$ctrl.submitted"
+         class="feedback__rating feedback__block">
       <div class="feedback__rating__stars">
         <ng-repeat ng-repeat="i in [5,4,3,2,1]">
           <input type="radio" id="star-{{i}}" class="feedback__rating__input">
@@ -36,7 +35,8 @@
     </div>
 
     <!-- submit feedback -->
-    <div class="feedback__comment feedback__block">
+    <div ng-if="!$ctrl.submitted"
+         class="feedback__comment feedback__block">
       <input ng-model="$ctrl.comment"
              type="text"
              class="dc-input"
@@ -50,13 +50,13 @@
     </div>
 
     <!-- answer later -->
-    <div class="feedback__later feedback__block">
+    <div ng-if="!$ctrl.submitted"
+         class="feedback__later feedback__block">
       <span ng-click="$ctrl.toggle()"
             class="dc-text">
         Answer later
       </span>
     </div>
-  </div>
 
   <!-- thank you message -->
   <div ng-if="$ctrl.submitted"
