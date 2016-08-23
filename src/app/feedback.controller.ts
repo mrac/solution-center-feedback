@@ -5,12 +5,7 @@ const COOKIE_NAME = 'SC_FEEDBACK';
 export class ScFeedbackController {
   static $inject: Array<string> = ['$cookies'];
 
-  // TEMP
-  module: any = {
-    id: 0,
-    name: 'Solution Center'
-  };
-
+  module: any;
   isMinified: boolean = false;
   hidden: boolean = false;
   submitted: boolean = false;

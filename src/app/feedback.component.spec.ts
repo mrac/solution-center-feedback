@@ -3,23 +3,22 @@ import 'angular';
 import 'angular-mocks';
 
 import { ComponentTest } from '../utils/test.component';
-// import 'phantomjs-polyfill';
 import { ScFeedbackController } from './feedback.controller';
+
+import 'phantomjs-polyfill';
 
 describe('ScFeedbackComponent', () => {
   let sut: ComponentTest<ScFeedbackController>;
 
   beforeEach(angular.mock.module('solutioncenter.feedback.app'));
   beforeEach(() => {
-    sut = new ComponentTest<ScFeedbackController>('<sc-feedback module="module"></sc-feedback>', 'scFeedback');
+    sut = newComponent();
   });
 
-  it('should', () => {
-    console.log('======= sut', sut);
-    let attributes: any = { module: { name: 'SC' }};
+  it('should set module via attributes', () => {
+    let attributes: any = { module: { name: 'TEST' }};
     let vm: ScFeedbackController = sut.createComponent(attributes);
-    console.log(vm);
-    //console.log(attributes);
+    expect(vm.module.name).toEqual('TEST');
   });
 
   // it('should set selector name', () => {
@@ -44,5 +43,12 @@ describe('ScFeedbackComponent', () => {
   // function mocks(): void {
   //   sut = new ComponentTest<ScFeedbackController>('<sc-feedback module="module"></sc-feedback>', 'scFeedback');
   // }
+
+  function newComponent(): ComponentTest<ScFeedbackController> {
+    return new ComponentTest<ScFeedbackController>(
+      '<sc-feedback module="module"></sc-feedback>',
+      'scFeedback'
+    );
+  }
 
 });
