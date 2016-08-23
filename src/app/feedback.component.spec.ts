@@ -17,15 +17,14 @@ describe('ScFeedbackComponent', () => {
 
   it('should be minified if conditions are met', () => {
     let el = getElement('.solution-center-feedback');
-    expect(el.hasClass('solution-center-feedback--opened')).toBe(true);
-    expect(el.hasClass('solution-center-feedback--closed')).toBe(false);
+    expect(el.hasClass('solution-center-feedback--minified')).toBe(false);
+    //expect(el.hasClass('solution-center-feedback--closed')).toBe(false);
 
     vm.toggle();
     sut.$scope.$digest();
 
     el = getElement('.solution-center-feedback');
-    expect(el.hasClass('solution-center-feedback--opened')).toBe(false);
-    expect(el.hasClass('solution-center-feedback--closed')).toBe(true);
+    expect(el.hasClass('solution-center-feedback--minified')).toBe(true);
   });
 
   /////////////////////////
@@ -37,6 +36,7 @@ describe('ScFeedbackComponent', () => {
   }
 
   function modules(): void {
+    angular.mock.module('solutioncenter.communicator');
     angular.mock.module('solutioncenter.feedback.app');
   }
 
