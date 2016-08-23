@@ -10,25 +10,24 @@ $dc-font-path: "fonts";
 //  ---------------------------------------------------------------------------
 
 .solution-center-feedback {
-  display: flex;
-  position: fixed;
-  width: 100%;
   bottom: 0;
   color: $dc-white;
-  z-index: 100;
+  display: flex;
   overflow: hidden;
-
-  transition-property: all;
+  position: fixed;
   transition-duration: 3s;
-  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0, 1, .5, 1);
+  width: 100%;
+  z-index: 100;
 
   &--opened {
-    flex-direction: row;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
     align-items: center;
-    padding: 16px 3%;
+    background-color: rgba($dc-black, .7);
+    flex-direction: row;
+    justify-content: center;
     max-height: 80px;
+    padding: 16px 3%;
 
     @media (max-width: 950px) {
       flex-direction: column;
@@ -38,27 +37,27 @@ $dc-font-path: "fonts";
   }
 
   &--minified {
+    align-items: flex-end;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: flex-end;
   }
 
   &--closed {
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     max-height: 0;
   }
 
   .feedback__title {
-    width: 24%;
     line-height: 2rem;
+    margin: 0 $dc-space200 0 0;
 
     &--upper {
       font-size: 11px;
       text-transform: uppercase;
 
       @media (max-width: 950px) {
-        font-size: 14px;
+        font-size: $dc-font100;
       }
     }
 
@@ -76,7 +75,7 @@ $dc-font-path: "fonts";
 
     &__stars {
       float: left;
-      margin-right: 8px;
+      margin-right: $dc-space75;
 
       &:not(:checked) {
         .feedback__rating__input {
@@ -85,58 +84,57 @@ $dc-font-path: "fonts";
         }
 
         .feedback__rating__star {
+          color: $dc-white;
+          cursor: pointer;
           float: right;
-          width: 24px;
+          font-size: 200%;
           height: 24px;
-          margin-right: 4px;
+          margin-right: $dc-space50;
           overflow: hidden;
           white-space: nowrap;
-          cursor: pointer;
-          font-size: 200%;
-          color: $dc-white;
+          width: 26px;
 
-          &.colored {
-            color: $dc-yellow50;
+          &::after {
+            content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyMnB4IiB2aWV3Qm94PSIwIDAgMjQgMjIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+U3RhciAxIENvcHkgMzwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSJSYXRpbmctVG9vbCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8ZyBpZD0iMTI4MC0xNjAwcHgtLS0tUmF0aW5nLS0tLTEtRW1wdHkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNDAuMDAwMDAwLCAtODU0LjAwMDAwMCkiIGZpbGw9IiNGRkZGRkYiPiAgICAgICAgICAgIDxnIGlkPSJHcm91cC00IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwgODMyLjAwMDAwMCkiPiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzQwLjAwMDAwMCwgMjIuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iU3Rhci0xLUNvcHktMyIgcG9pbnRzPSIxMiAxOCA0Ljk0NjU3Njk3IDIxLjcwODIwMzkgNi4yOTM2NjA5IDEzLjg1NDEwMiAwLjU4NzMyMTgwNCA4LjI5MTc5NjA3IDguNDczMjg4NDkgNy4xNDU4OTgwMyAxMiAwIDE1LjUyNjcxMTUgNy4xNDU4OTgwMyAyMy40MTI2NzgyIDguMjkxNzk2MDcgMTcuNzA2MzM5MSAxMy44NTQxMDIgMTkuMDUzNDIzIDIxLjcwODIwMzkiPjwvcG9seWdvbj4gICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgIDwvZz4gICAgICAgIDwvZz4gICAgPC9nPjwvc3ZnPg==);
           }
 
-          &:before {
-            content: '★';
+          &.colored::after {
+            content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyMnB4IiB2aWV3Qm94PSIwIDAgMjQgMjIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+U3RhciAxIENvcHkgMzwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSJSYXRpbmctVG9vbCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8ZyBpZD0iMTI4MC0xNjAwcHgtLS0tUmF0aW5nLS0tLTEtRW1wdHkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNDAuMDAwMDAwLCAtODU0LjAwMDAwMCkiIGZpbGw9IiNGRkUzNDciPiAgICAgICAgICAgIDxnIGlkPSJHcm91cC00IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwgODMyLjAwMDAwMCkiPiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzQwLjAwMDAwMCwgMjIuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iU3Rhci0xLUNvcHktMyIgcG9pbnRzPSIxMiAxOCA0Ljk0NjU3Njk3IDIxLjcwODIwMzkgNi4yOTM2NjA5IDEzLjg1NDEwMiAwLjU4NzMyMTgwNCA4LjI5MTc5NjA3IDguNDczMjg4NDkgNy4xNDU4OTgwMyAxMiAwIDE1LjUyNjcxMTUgNy4xNDU4OTgwMyAyMy40MTI2NzgyIDguMjkxNzk2MDcgMTcuNzA2MzM5MSAxMy44NTQxMDIgMTkuMDUzNDIzIDIxLjcwODIwMzkiPjwvcG9seWdvbj4gICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgIDwvZz4gICAgICAgIDwvZz4gICAgPC9nPjwvc3ZnPg==);
           }
         }
       }
     }
 
     &__score {
-      font-size: 14px;
+      font-size: $dc-font100;
     }
   }
 
   .feedback__comment {
-    display: flex;
     align-items: center;
-    width: 40%;
+    color: $dc-gray10;
+    display: flex;
     padding: 0 2%;
-    color: $dc-black;
+    width: 40%;
 
     @media (max-width: 950px) {
       padding: 0;
     }
 
     .dc-input {
-      width: 70%;
       margin-bottom: 0;
+      width: 70%;
     }
 
     .dc-btn {
-      width: 28%;
-      margin-left: 8px;
+      margin-left: $dc-space75;
     }
   }
 
   .feedback__later {
-    width: 10%;
-    text-align: center;
     cursor: pointer;
+    text-align: center;
+    width: 10%;
 
     @media (max-width: 950px) {
       margin-bottom: 0 !important;
@@ -145,23 +143,25 @@ $dc-font-path: "fonts";
 
   .feedback__block {
     @media (max-width: 950px) {
+      margin: 0 auto 20px;
       width: 100%;
-      margin-bottom: 20px;
     }
   }
 
   .feedback__opener {
     background-color: $dc-gray20;
-    padding-right: 1%;
-    padding-left: 1%;
-    text-transform: uppercase;
+    border-radius: $dc-radius100 0 0;
     cursor: pointer;
-    border-radius: 3px 0 0 0;
+    font-size: $dc-font50;
+    padding: $dc-space50 + .2 $dc-space75 0;
+    text-transform: uppercase;
+    line-height: 1;
+
 
     &__bottom-bar {
-      width: 100%;
-      height: 10px;
       background-color: $dc-gray20;
+      height: 8px;
+      width: 100%;
     }
   }
 }
