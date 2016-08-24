@@ -19,16 +19,16 @@ export class ScFeedbackController {
               private ScFeedbackService: ScFeedbackService) {
     this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
 
-    this.ScFeedbackService
-      .isFeedbackAvailable(this.module.id)
-      .then(
-        (response) => {
-          this.isAvailable = response.data.feedbackAvailable;
-        },
-        () => {
-          // TODO Handle error
-        }
-      );
+    // this.ScFeedbackService
+    //   .isFeedbackAvailable(this.module.id)
+    //   .then(
+    //     (response) => {
+    //       this.isAvailable = response.data.feedbackAvailable;
+    //     },
+    //     () => {
+    //       // TODO Handle error
+    //     }
+    //   );
   }
 
   submit(): void {
