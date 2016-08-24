@@ -1,4 +1,4 @@
-export class ScFeedbackService {
+class ScFeedbackService {
 
   static $inject: Array<string> = ['$http', 'ScEnvironments'];
 
@@ -29,3 +29,5 @@ export class ScFeedbackService {
     return this.environment + endpoint;
   }
 }
+
+export default ScFeedbackService;

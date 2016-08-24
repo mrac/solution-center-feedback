@@ -1,8 +1,8 @@
-import {ScFeedbackService} from './feedback.service';
+import ScFeedbackService from './feedback.service';
 
 const COOKIE_NAME = 'SC_FEEDBACK';
 
-export class ScFeedbackController {
+class ScFeedbackController {
   static $inject: Array<string> = ['$cookies', 'ScFeedbackService'];
 
   module: any;
@@ -64,3 +64,5 @@ export class ScFeedbackController {
     this.rating.hover = (rating === 0 && this.rating.actual) || rating;
   }
 }
+
+export default ScFeedbackController;

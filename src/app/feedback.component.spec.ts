@@ -2,7 +2,7 @@ import './index';
 import 'angular-mocks';
 
 import { ComponentTest } from '../utils/test.component';
-import { ScFeedbackController } from './feedback.controller';
+import ScFeedbackController from './feedback.controller';
 
 import IAugmentedJQuery = angular.IAugmentedJQuery;
 
