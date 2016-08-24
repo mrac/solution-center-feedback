@@ -96,6 +96,53 @@ describe('ScFeedbackComponent', () => {
     }
   });
 
+  /**
+   * Rate
+   */
+  describe('rate', () => {
+    let stars: IAugmentedJQuery;
+    let rating: IAugmentedJQuery;
+
+    beforeEach(() => {
+      stars = getElement('.feedback__rating__star');
+    });
+
+    it('should set rating when a star is clicked', () => {
+      rating = getEl();
+      expect(rating.text()).toEqual(jasmine.stringMatching('0'));
+      trigger(2, 'click');
+      expect(rating.text()).toEqual(jasmine.stringMatching('3'));
+    });
+
+    it('should set hover value to passed value on mouse enter', () => {
+      rating = getEl();
+      expect(vm.rating.hover).toEqual(0);
+      trigger(2, 'mouseenter');
+      expect(vm.rating.hover).toEqual(3);
+    });
+
+    it('should set hover value to zero on mouse leave', () => {
+      rating = getEl();
+      expect(vm.rating.hover).toEqual(0);
+      trigger(3, 'mouseenter');
+      expect(vm.rating.hover).toEqual(2);
+      trigger(3, 'mouseleave');
+      expect(vm.rating.hover).toEqual(0);
+    });
+
+    /////////////////////////
+
+    function trigger(index: number, type: string): void {
+      angular.element(stars.get(index)).triggerHandler(type);
+      sut.$scope.$digest();
+      rating = getEl();
+    }
+
+    function getEl(): IAugmentedJQuery {
+      return getElement('.feedback__rating__score');
+    }
+  });
+
   /////////////////////////
 
   function setup(): void {
