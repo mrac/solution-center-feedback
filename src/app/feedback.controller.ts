@@ -15,23 +15,23 @@ class ScFeedbackController {
     hover: 0
   };
 
-  constructor(private $cookies: ng.cookies.ICookiesService,
-              private ScFeedbackService: ScFeedbackService) {
+  constructor(
+    private $cookies: ng.cookies.ICookiesService,
+    private ScFeedbackService: ScFeedbackService
+  ) {
     this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
-
-    // this.ScFeedbackService
-    //   .isFeedbackAvailable(this.module.id)
-    //   .then(
-    //     (response) => {
-    //       this.isAvailable = response.data.feedbackAvailable;
-    //     },
-    //     () => {
-    //       // TODO Handle error
-    //     }
-    //   );
+    this.isFeedbackAvailable();
   }
 
   submit(): void {
+    let feedback: any = {
+      score: this.rating,
+      comment: this.comment
+    };
+
+    this.ScFeedbackService.submitFeedback(this.module.id, feedback)
+      .then((r: any) => this.submitted = true)
+      .catch((e: any) => console.log(e));
     // let feedback = {
     //   rating: this.rating,
     //   comment: this.comment
@@ -62,6 +62,12 @@ class ScFeedbackController {
 
   update(rating: number): void {
     this.rating.hover = (rating === 0 && this.rating.actual) || rating;
+  }
+
+  isFeedbackAvailable(): void {
+    this.ScFeedbackService.isFeedbackAvailable(this.module.id)
+      .then((r: any) => this.isAvailable = r.data.feedbackAvailable)
+      .catch((e: any) => console.log(e));
   }
 }
 

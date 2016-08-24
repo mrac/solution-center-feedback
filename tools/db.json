@@ -1,0 +1,14 @@
+{
+  "modules": [
+    { "id": 1 },
+    { "id": 2 }
+  ],
+  "feedback-status": [
+    { "id": 1, "feedbackAvailable": true },
+    { "id": 2, "feedbackAvailable": false }
+  ],
+  "feedback": [
+    { "id": 1 },
+    { "id": 2 }
+  ]
+}

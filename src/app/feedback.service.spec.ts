@@ -1,5 +1,5 @@
 /*
-//import {ScFeedbackService} from './feedback.service';
+//import ScFeedbackService from './feedback.service';
 
 describe('ScFeedbackService', () => {
 
