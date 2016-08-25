@@ -4,7 +4,6 @@ class ScFeedbackService {
   static $inject: Array<string> = ['$http', 'ScEnvironments'];
 
   environment: scc.Environment;
-  // environment: string;  // temp (uncomment line above)
   get: string = 'feedback-status';
   post: string = 'feedback';
 
@@ -12,8 +11,7 @@ class ScFeedbackService {
     private $http: ng.IHttpService,
     private ScEnvironments: scc.ScEnvironmentsProvider
   ) {
-    this.environment = ScEnvironments.setCurrentEnvironment('INTEGRATION');
-    // this.environment = 'http://localhost:4444'; // temp (uncomment line above)
+    this.environment = ScEnvironments.getCurrentEnvironment();
   }
 
   isFeedbackAvailable(moduleId: number): ng.IPromise<any> {
