@@ -68,7 +68,7 @@ fdescribe('ScFeedbackService', () => {
   }
 
   function spies(): void {
-    mock.environmentsService.setCurrentEnvironment.and.returnValue(mock.environment);
+    mock.environmentsService.getCurrentEnvironment.and.returnValue(mock.environment);
     mock.httpService.get.and.returnValue(true);
     mock.httpService.post.and.returnValue(true);
   }
@@ -81,7 +81,7 @@ fdescribe('ScFeedbackService', () => {
       module: { id: 1,  name: 'test' },
       feedback: { score: 5, comment: 'great' },
       environment: { MODULE_SERVICE: 'ms' },
-      environmentsService: jasmine.createSpyObj('ScEnvironments', ['setCurrentEnvironment']),
+      environmentsService: jasmine.createSpyObj('ScEnvironments', ['getCurrentEnvironment']),
       httpService: jasmine.createSpyObj('$http', ['get', 'post']),
       getEndpoint: buildEndpointUrl
     };
@@ -90,14 +90,6 @@ fdescribe('ScFeedbackService', () => {
   function buildEndpointUrl(type: string): string {
     return `${mock.environment.MODULE_SERVICE}/modules/${mock.module.id}/${mock[type]}`;
   }
-
-  // function expectGet(endpoint: string, status: number): void {
-  //   $httpBackend.expectGET(endpoint).respond(status);
-  // }
-  //
-  // function spyOnHttpGet(): void {
-  //   mock.httpService.get.and.callFake(mock.noop);
-  // }
 
   function teardown(): void {
     $httpBackend.verifyNoOutstandingExpectation();
