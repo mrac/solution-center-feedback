@@ -3,8 +3,8 @@ import scc = ScCommunicator;
 class ScFeedbackService {
   static $inject: Array<string> = ['$http', 'ScEnvironments'];
 
-  //environment: scc.Environment;
-  environment: string;  // temp (uncomment line above)
+  environment: scc.Environment;
+  // environment: string;  // temp (uncomment line above)
   get: string = 'feedback-status';
   post: string = 'feedback';
 
@@ -12,8 +12,8 @@ class ScFeedbackService {
     private $http: ng.IHttpService,
     private ScEnvironments: scc.ScEnvironmentsProvider
   ) {
-    //this.environment = ScEnvironments.getCurrentEnvironment();
-    this.environment = 'http://localhost:4444'; // temp (uncomment line above)
+    this.environment = ScEnvironments.setCurrentEnvironment('INTEGRATION');
+    // this.environment = 'http://localhost:4444'; // temp (uncomment line above)
   }
 
   isFeedbackAvailable(moduleId: number): ng.IPromise<any> {
@@ -27,7 +27,7 @@ class ScFeedbackService {
   }
 
   buildEndpointUrl(type: string, moduleId: number): string {
-    return `${this.environment}/modules/${moduleId}/${this[type]}`;
+    return `${this.environment.MODULE_SERVICE}/modules/${moduleId}/${this[type]}`;
   }
 }
 

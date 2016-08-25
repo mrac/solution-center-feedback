@@ -24,30 +24,7 @@ class ScFeedbackController {
   }
 
   submit(): void {
-    let feedback: any = {
-      score: this.rating,
-      comment: this.comment
-    };
-
-    this.ScFeedbackService.submitFeedback(this.module.id, feedback)
-      .then((r: any) => this.submitted = true)
-      .catch((e: any) => console.log(e));
-    // let feedback = {
-    //   rating: this.rating,
-    //   comment: this.comment
-    // };
-
-    this.submitted = true;
-
-    // this.ScFeedbackService
-    //   .submitFeedback(this.module.id, feedback)
-    //   .then(
-    //     () => {
-    //       this.submitted = true;
-    //     },
-    //     () => {
-    //       // TODO Handle error
-    //     });
+    this.submitFeedback({ score: this.rating.actual, comment: this.comment });
   }
 
   toggle(): void {
@@ -67,6 +44,12 @@ class ScFeedbackController {
   isFeedbackAvailable(): void {
     this.ScFeedbackService.isFeedbackAvailable(this.module.id)
       .then((r: any) => this.isAvailable = r.data.feedbackAvailable)
+      .catch((e: any) => console.log(e));
+  }
+
+  submitFeedback(feedback: any): void {
+    this.ScFeedbackService.submitFeedback(this.module.id, feedback)
+      .then((r: any) => this.submitted = true)
       .catch((e: any) => console.log(e));
   }
 }
