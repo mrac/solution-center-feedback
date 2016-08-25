@@ -36,8 +36,11 @@
         </div>
       </div>
 
-      <sc-feedback module="{ id: 1, name: 'Solution Center'}"></sc-feedback>
+      <div ng-controller="DemoController as DemoCtrl">
+        <sc-feedback module="DemoCtrl.module"></sc-feedback>
+      </div>
     </div>
+
   </body>
 
 </html>

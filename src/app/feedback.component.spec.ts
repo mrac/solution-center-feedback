@@ -1,6 +1,4 @@
 import './index';
-import 'angular-mocks';
-
 import { ComponentTest } from '../util/test.component';
 import ScFeedbackController from './feedback.controller';
 
