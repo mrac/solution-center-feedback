@@ -32,20 +32,22 @@ export class ScFeedbackController {
   }
 
   submit(): void {
-    let feedback = {
-      rating: this.rating,
-      comment: this.comment
-    };
+    // let feedback = {
+    //   rating: this.rating,
+    //   comment: this.comment
+    // };
 
-    this.ScFeedbackService
-      .submitFeedback(this.module.id, feedback)
-      .then(
-        () => {
-          this.submitted = true;
-        },
-        () => {
-          // TODO Handle error
-        });
+    this.submitted = true;
+
+    // this.ScFeedbackService
+    //   .submitFeedback(this.module.id, feedback)
+    //   .then(
+    //     () => {
+    //       this.submitted = true;
+    //     },
+    //     () => {
+    //       // TODO Handle error
+    //     });
   }
 
   toggle(): void {
