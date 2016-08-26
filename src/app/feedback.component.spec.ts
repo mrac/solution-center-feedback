@@ -6,12 +6,11 @@ import IAugmentedJQuery = angular.IAugmentedJQuery;
 import IInjectorService = angular.auto.IInjectorService;
 
 describe('ScFeedbackComponent', () => {
-  let service: any;
-  let sut: ComponentTest<ScFeedbackController>;
-  let mock: any;
+  let sut: ComponentTest<ScFeedbackController>;    // sut = system under test
   let vm: ScFeedbackController;
   let el: IAugmentedJQuery;
   let $q: angular.IQService;
+  let mock: any;
 
   beforeEach(setup);
 
@@ -38,7 +37,7 @@ describe('ScFeedbackComponent', () => {
     let closeClass = 'solution-center-feedback--closed';
 
     it('should show component if feedback is available', () => {
-      spyOnServiceMethod('isFeedbackAvailable', mock.feedbackAvailable);
+      spyOnServiceMethod('isFeedbackAvailable', mock.isAvailable);
 
       el = getEl();
       expect(el.hasClass(openClass)).toBe(false);
@@ -49,7 +48,7 @@ describe('ScFeedbackComponent', () => {
     // component is hidden by default. that's why both assertions check for `true`.
     // if this test was failing, the second assertion would be failing.
     it('should continue to hide component if feedback is not available', () => {
-      spyOnServiceMethod('isFeedbackAvailable');  // mimic error
+      spyOnServiceMethod('isFeedbackAvailable');  // mimic error response
 
       el = getEl();
       expect(el.hasClass(closeClass)).toBe(true);
@@ -65,7 +64,7 @@ describe('ScFeedbackComponent', () => {
     }
 
     function getEl(): IAugmentedJQuery {
-      return getElement('.solution-center-feedback');
+      return getElement(mock.rootCssClass);
     }
   });
 
@@ -76,17 +75,35 @@ describe('ScFeedbackComponent', () => {
     let minClass = 'solution-center-feedback--minified';
 
     it('should minify element', () => {
+      vm.isMinified = false;
       el = getEl();
+
       expect(el.hasClass(minClass)).toBe(false);
+
       toggle();
+
+      expect(vm.isMinified).toBe(true);
       expect(el.hasClass(minClass)).toBe(true);
+      expect(mock.cookieService.put).toHaveBeenCalledWith(
+        mock.COOKIE_NAME,
+        vm.isMinified.toString()
+      );
     });
 
-    it('should maximize element', () => {
-      el = getEl().addClass(minClass);
+    xit('should maximize element', () => {
+      vm.isMinified = true;
+      el = getEl();
+
       expect(el.hasClass(minClass)).toBe(true);
+
       toggle();
+
+      expect(vm.isMinified).toBe(false);
       expect(el.hasClass(minClass)).toBe(false);
+      expect(mock.cookieService.put).toHaveBeenCalledWith(
+        mock.COOKIE_NAME,
+        vm.isMinified.toString()
+      );
     });
 
     /////////////////////////
@@ -97,7 +114,7 @@ describe('ScFeedbackComponent', () => {
     }
 
     function getEl(): IAugmentedJQuery {
-      return getElement('.solution-center-feedback');
+      return getElement(mock.rootCssClass);
     }
   });
 
@@ -136,7 +153,7 @@ describe('ScFeedbackComponent', () => {
     it('should not submit if error is encountered', () => {
       expect(vm.submitted).toBe(false);
 
-      spyOnServiceMethod('submitFeedback');   // mimic error
+      spyOnServiceMethod('submitFeedback');   // mimic error response
       callMethod('submit');
 
       expect(vm.submitted).toBe(false);
@@ -202,23 +219,35 @@ describe('ScFeedbackComponent', () => {
     mocks();
     modules();
     injectors();
+    spies();
     components();
   }
 
   function modules(): void {
-    angular.mock.module('solutioncenter.feedback.app');
+    angular.mock.module('solutioncenter.feedback.app', ($provide: any) => {
+      $provide.value('$cookies', mock.cookieService);
+      $provide.value('ScFeedbackService', mock.feedbackService);
+    });
   }
 
   function injectors(): void {
     angular.mock.inject(($injector: IInjectorService) => {
       $q = $injector.get('$q');
-      service = $injector.get('ScFeedbackService');
     });
   }
 
+  function spies(): void {
+    spyOnServiceMethod('isFeedbackAvailable');
+    spyOnCookieMethod('get', false);
+  }
+
   function spyOnServiceMethod(method: string, value?: any): void {
-    let response = (value && $q.when(value)) || $q.reject({ msg: 'Error'});
-    spyOn(service, method).and.returnValue(response);
+    let response = (value && $q.when(value)) || $q.reject({ code: 401, msg: 'Error'});
+    mock.feedbackService[method].and.returnValue(response);
+  }
+
+  function spyOnCookieMethod(method: string, value: boolean): void {
+    mock.cookieService[method].and.returnValue(value.toString());
   }
 
   function components(): void {
@@ -234,11 +263,18 @@ describe('ScFeedbackComponent', () => {
           name: 'TEST'
         }
       },
-      feedbackAvailable: {
+      isAvailable: {
         data: {
           feedbackAvailable: true
         }
-      }
+      },
+      feedbackService: jasmine.createSpyObj('ScFeedbackService', [
+        'isFeedbackAvailable',
+        'submitFeedback'
+      ]),
+      COOKIE_NAME: 'SC_FEEDBACK',
+      cookieService: jasmine.createSpyObj('mock.cookieService', ['get', 'put']),
+      rootCssClass: '.solution-center-feedback'
     };
   }
 

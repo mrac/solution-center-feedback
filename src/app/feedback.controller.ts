@@ -9,6 +9,7 @@ class ScFeedbackController {
   isAvailable: boolean = false;
   isMinified: boolean = false;
   submitted: boolean = false;
+  error: any;
   comment: string = '';
   rating: any = {
     actual: 0,
@@ -20,7 +21,7 @@ class ScFeedbackController {
     private ScFeedbackService: ScFeedbackService
   ) {
     this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
-    //this.isFeedbackAvailable();
+    this.isFeedbackAvailable();
   }
 
   submit(): void {
@@ -44,13 +45,13 @@ class ScFeedbackController {
   isFeedbackAvailable(): void {
     this.ScFeedbackService.isFeedbackAvailable(this.module.id)
       .then((r: any) => this.isAvailable = r.data.feedbackAvailable)
-      .catch((e: any) => console.log(e));
+      .catch((e: any) => this.error = e);
   }
 
   submitFeedback(feedback: any): void {
     this.ScFeedbackService.submitFeedback(this.module.id, feedback)
       .then((r: any) => this.submitted = true)
-      .catch((e: any) => console.log(e));
+      .catch((e: any) => this.error = e);
   }
 }
 
