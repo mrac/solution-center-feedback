@@ -3,7 +3,7 @@ import ScFeedbackService from './feedback.service';
 import IInjectorService = angular.auto.IInjectorService;
 import IProvideService = angular.auto.IProvideService;
 
-fdescribe('ScFeedbackService', () => {
+describe('ScFeedbackService', () => {
   let $httpBackend: ng.IHttpBackendService;
   let scFeedbackService: ScFeedbackService;
   let scEnvironments: any;

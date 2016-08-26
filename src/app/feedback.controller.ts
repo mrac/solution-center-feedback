@@ -20,7 +20,7 @@ class ScFeedbackController {
     private ScFeedbackService: ScFeedbackService
   ) {
     this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
-    this.isFeedbackAvailable();
+    //this.isFeedbackAvailable();
   }
 
   submit(): void {
