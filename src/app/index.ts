@@ -1,8 +1,4 @@
-import 'angular';
-import 'angular-cookies';
-import 'solution-center-communicator';
-
-import { ScFeedbackService } from './feedback.service';
+import ScFeedbackService from './feedback.service';
 import ScFeedbackComponent from './feedback.component';
 
 angular

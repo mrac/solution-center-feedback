@@ -1,5 +1,4 @@
 var loaders = require('./loaders');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
@@ -18,20 +17,12 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
-      warning: false,
+      compress: {
+        angular: true,
+        warnings: false
+      },
       mangle: true,
       comments: false
-    }),
-    new HtmlWebpackPlugin({
-      template: './demo/index.html',
-      inject: 'body',
-      hash: true
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      'window.jquery': 'jquery'
     })
   ],
   module:{

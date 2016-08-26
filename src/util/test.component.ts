@@ -4,8 +4,8 @@ import ICompileService = angular.ICompileService;
 export class ComponentTest<TController> {
   private $rootScope: ng.IScope;
   private $compile: ng.ICompileService;
-  public $scope: ng.IScope;
-  public element: ng.IAugmentedJQuery;
+  $scope: ng.IScope;
+  element: ng.IAugmentedJQuery;
 
   constructor(private template: string, private registerName: string) {
     angular.mock.inject(($rootScope: IRootScopeService, $compile: ICompileService) => {
@@ -14,7 +14,7 @@ export class ComponentTest<TController> {
     });
   }
 
-  public createComponent(attributes: any): TController {
+  createComponent(attributes: any): TController {
     this.$scope = this.$rootScope.$new();
     for (let key in attributes) {
       if (attributes.hasOwnProperty(key)) {

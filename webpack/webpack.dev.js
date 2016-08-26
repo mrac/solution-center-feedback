@@ -4,7 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: ['./src/solutioncenter.feedback.ts'],
+  entry: ['./demo/index.ts', './src/solutioncenter.feedback.ts'],
   output: {
     filename: 'build.js',
     path: 'dist'

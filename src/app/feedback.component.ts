@@ -1,4 +1,4 @@
-import { ScFeedbackController } from './feedback.controller';
+import ScFeedbackController from './feedback.controller';
 
 class ScFeedbackComponent implements ng.IComponentOptions {
   bindings: any = { module: '<' };

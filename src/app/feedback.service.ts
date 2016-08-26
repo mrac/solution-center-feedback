@@ -1,31 +1,32 @@
-export class ScFeedbackService {
+import scc = ScCommunicator;
 
+class ScFeedbackService {
   static $inject: Array<string> = ['$http', 'ScEnvironments'];
 
-  environment: any;
+  environment: scc.Environment;
+  get: string = 'feedback-status';
+  post: string = 'feedback';
 
-  feedbackAvailable: string = '/modules/{}/feedback-status'; // GET
-  sendFeedback: string = '/modules/{}/feedback'; // POST
-
-  constructor(private $http: ng.IHttpService, private ScEnvironments: any) {
+  constructor(
+    private $http: ng.IHttpService,
+    private ScEnvironments: scc.ScEnvironmentsProvider
+  ) {
     this.environment = ScEnvironments.getCurrentEnvironment();
   }
 
   isFeedbackAvailable(moduleId: number): ng.IPromise<any> {
-    return this.$http.get(this.buildEndpointUrl(this.feedbackAvailable, moduleId));
+    this.get = this.buildEndpointUrl('get', moduleId);
+    return this.$http.get(this.get);
   }
 
   submitFeedback(moduleId: number, feedback: any): ng.IPromise<any> {
-    return this.$http.post(this.buildEndpointUrl(this.sendFeedback, moduleId), feedback);
+    this.post = this.buildEndpointUrl('post', moduleId);
+    return this.$http.post(this.post, feedback);
   }
 
-  buildEndpointUrl(endpoint: string, args: any): string {
-    if (endpoint && args.length > 1) {
-      args.forEach((arg: any) => {
-        endpoint = endpoint.replace('{}', arg);
-      });
-    }
-
-    return this.environment + endpoint;
+  buildEndpointUrl(type: string, moduleId: number): string {
+    return `${this.environment.MODULE_SERVICE}/modules/${moduleId}/${this[type]}`;
   }
 }
+
+export default ScFeedbackService;

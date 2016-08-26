@@ -15,7 +15,11 @@ module.exports = function (config) {
     singleRun: true,
     autoWatchBatchDelay: 300,
     files: [
+      './node_modules/angular/angular.min.js',
+      './node_modules/angular-cookies/angular-cookies.min.js',
+      './node_modules/angular-mocks/angular-mocks.js',
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      './node_modules/solution-center-communicator/dist/solutioncenter.communicator.min.js',
       './src/test.ts'
     ],
     babelPreprocessor: {

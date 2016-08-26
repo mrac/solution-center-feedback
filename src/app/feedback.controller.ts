@@ -1,8 +1,8 @@
-import {ScFeedbackService} from './feedback.service';
+import ScFeedbackService from './feedback.service';
 
 const COOKIE_NAME = 'SC_FEEDBACK';
 
-export class ScFeedbackController {
+class ScFeedbackController {
   static $inject: Array<string> = ['$cookies', 'ScFeedbackService'];
 
   module: any;
@@ -15,39 +15,16 @@ export class ScFeedbackController {
     hover: 0
   };
 
-  constructor(private $cookies: ng.cookies.ICookiesService,
-              private ScFeedbackService: ScFeedbackService) {
+  constructor(
+    private $cookies: ng.cookies.ICookiesService,
+    private ScFeedbackService: ScFeedbackService
+  ) {
     this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
-
-    // this.ScFeedbackService
-    //   .isFeedbackAvailable(this.module.id)
-    //   .then(
-    //     (response) => {
-    //       this.isAvailable = response.data.feedbackAvailable;
-    //     },
-    //     () => {
-    //       // TODO Handle error
-    //     }
-    //   );
+    this.isFeedbackAvailable();
   }
 
   submit(): void {
-    // let feedback = {
-    //   rating: this.rating,
-    //   comment: this.comment
-    // };
-
-    this.submitted = true;
-
-    // this.ScFeedbackService
-    //   .submitFeedback(this.module.id, feedback)
-    //   .then(
-    //     () => {
-    //       this.submitted = true;
-    //     },
-    //     () => {
-    //       // TODO Handle error
-    //     });
+    this.submitFeedback({ score: this.rating.actual, comment: this.comment });
   }
 
   toggle(): void {
@@ -63,4 +40,18 @@ export class ScFeedbackController {
   update(rating: number): void {
     this.rating.hover = (rating === 0 && this.rating.actual) || rating;
   }
+
+  isFeedbackAvailable(): void {
+    this.ScFeedbackService.isFeedbackAvailable(this.module.id)
+      .then((r: any) => this.isAvailable = r.data.feedbackAvailable)
+      .catch((e: any) => console.log(e));
+  }
+
+  submitFeedback(feedback: any): void {
+    this.ScFeedbackService.submitFeedback(this.module.id, feedback)
+      .then((r: any) => this.submitted = true)
+      .catch((e: any) => console.log(e));
+  }
 }
+
+export default ScFeedbackController;
