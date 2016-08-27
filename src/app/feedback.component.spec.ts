@@ -1,5 +1,5 @@
 import './index';
-import { ComponentTest } from '../util/test.component';
+import ComponentTest from '../util/test.component';
 import ScFeedbackController from './feedback.controller';
 
 import IAugmentedJQuery = angular.IAugmentedJQuery;

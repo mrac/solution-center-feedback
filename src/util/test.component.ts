@@ -1,7 +1,7 @@
 import IRootScopeService = angular.IRootScopeService;
 import ICompileService = angular.ICompileService;
 
-export class ComponentTest<TController> {
+class ComponentTest<TController> {
   private $rootScope: ng.IScope;
   private $compile: ng.ICompileService;
   $scope: ng.IScope;
@@ -26,3 +26,5 @@ export class ComponentTest<TController> {
     return this.element.controller(this.registerName);
   }
 }
+
+export default ComponentTest;
