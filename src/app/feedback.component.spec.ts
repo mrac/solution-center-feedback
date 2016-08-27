@@ -37,23 +37,40 @@ describe('ScFeedbackComponent', () => {
     let closeClass = 'solution-center-feedback--closed';
 
     it('should show component if feedback is available', () => {
-      spyOnServiceMethod('isFeedbackAvailable', mock.isAvailable);
-
+      vm.isAvailable = false;
+      sut.$scope.$digest();
       el = getEl();
+
       expect(el.hasClass(openClass)).toBe(false);
+
+      spyOnServiceMethod('isFeedbackAvailable', mock.isAvailable);
       isAvailable();
+
       expect(el.hasClass(openClass)).toBe(true);
     });
 
     // component is hidden by default. that's why both assertions check for `true`.
     // if this test was failing, the second assertion would be failing.
-    it('should continue to hide component if feedback is not available', () => {
-      spyOnServiceMethod('isFeedbackAvailable');  // mimic error response
-
+    it('should hide component if feedback is not available', () => {
+      vm.isAvailable = false;
+      sut.$scope.$digest();
       el = getEl();
+
       expect(el.hasClass(closeClass)).toBe(true);
+
+      spyOnServiceMethod('isFeedbackAvailable', mock.isNotAvailable);
       isAvailable();
+
       expect(el.hasClass(closeClass)).toBe(true);
+    });
+
+    it('should populate error object if error is encountered', () => {
+      expect(vm.error).toBeUndefined();
+
+      spyOnServiceMethod('isFeedbackAvailable');  // mimic error response
+      isAvailable();
+
+      expect(vm.error).toBeDefined();
     });
 
     /////////////////////////
@@ -76,6 +93,7 @@ describe('ScFeedbackComponent', () => {
 
     it('should minify element', () => {
       vm.isMinified = false;
+      sut.$scope.$digest();
       el = getEl();
 
       expect(el.hasClass(minClass)).toBe(false);
@@ -90,8 +108,9 @@ describe('ScFeedbackComponent', () => {
       );
     });
 
-    xit('should maximize element', () => {
+    it('should maximize element', () => {
       vm.isMinified = true;
+      sut.$scope.$digest();
       el = getEl();
 
       expect(el.hasClass(minClass)).toBe(true);
@@ -150,13 +169,24 @@ describe('ScFeedbackComponent', () => {
       expect(getEl().length).toBe(1);
     });
 
-    it('should not submit if error is encountered', () => {
+    it('should not submit feedback if error is encountered', () => {
       expect(vm.submitted).toBe(false);
+      expect(getEl().length).toBe(0);
 
       spyOnServiceMethod('submitFeedback');   // mimic error response
       callMethod('submit');
 
       expect(vm.submitted).toBe(false);
+      expect(getEl().length).toBe(0);
+    });
+
+    it('should populate error object if error is encountered', () => {
+      expect(vm.error).toBeUndefined();
+
+      spyOnServiceMethod('submitFeedback');   // mimic error response
+      callMethod('submit');
+
+      expect(vm.error).toBeDefined();
     });
 
     /////////////////////////
@@ -180,8 +210,12 @@ describe('ScFeedbackComponent', () => {
     it('should set rating when a star is clicked', () => {
       rating = getEl();
       expect(rating.text()).toEqual(jasmine.stringMatching('0'));
+      expect(vm.rating.actual).toBe(0);
+
       trigger(2, 'click');
+
       expect(rating.text()).toEqual(jasmine.stringMatching('3'));
+      expect(vm.rating.actual).toBe(3);
     });
 
     it('should set hover value to passed value on mouse enter', () => {
@@ -237,7 +271,7 @@ describe('ScFeedbackComponent', () => {
   }
 
   function spies(): void {
-    spyOnServiceMethod('isFeedbackAvailable');
+    spyOnServiceMethod('isFeedbackAvailable', mock.isAvailable);
     spyOnCookieMethod('get', false);
   }
 
@@ -266,6 +300,11 @@ describe('ScFeedbackComponent', () => {
       isAvailable: {
         data: {
           feedbackAvailable: true
+        }
+      },
+      isNotAvailable: {
+        data: {
+          feedbackAvailable: false
         }
       },
       feedbackService: jasmine.createSpyObj('ScFeedbackService', [
