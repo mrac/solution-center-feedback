@@ -13,12 +13,22 @@ describe('ScFeedbackComponent', () => {
   beforeEach(setup);
 
   /**
+   * Module ID
+   */
+  describe('module ID', () => {
+
+    it('should set module ID via attributes', () => {
+      expect(vm.moduleId).toEqual(mock.attributes.module.id);
+    });
+  });
+
+  /**
    * Module name
    */
   describe('module name', () => {
 
     it('should set module name via attributes', () => {
-      expect(vm.module.name).toEqual(mock.attributes.module.name);
+      expect(vm.moduleName).toEqual(mock.attributes.module.name);
     });
 
     it('should show module name in view', () => {
@@ -162,6 +172,7 @@ describe('ScFeedbackComponent', () => {
     mock = {
       attributes: {
         module: {
+          id: 0,
           name: 'TEST'
         }
       }
