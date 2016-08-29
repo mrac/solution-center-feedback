@@ -1,4 +1,4 @@
-# Solution Center Feedback [![Build Status](https://travis-ci.org/zalando-incubator/solution-center-feedback.svg?branch=master)](https://travis-ci.org/zalando-incubator/solution-center-feedback)
+# Solution Center Feedback [![Build Status](https://travis-ci.org/zalando-incubator/solution-center-feedback.svg?branch=master)](https://travis-ci.org/zalando-incubator/solution-center-feedback) [![npm Version](https://img.shields.io/npm/v/solution-center-feedback.svg)](https://www.npmjs.com/package/solution-center-feedback)
 
 > Feedback tool for rating services provided by Brand Solutions
 
