@@ -1,10 +1,6 @@
-# Solution Center Feedback
+# Solution Center Feedback [![Build Status](https://travis-ci.org/zalando-incubator/solution-center-feedback.svg?branch=master)](https://travis-ci.org/zalando-incubator/solution-center-feedback)
 
 > Feedback tool for rating services provided by Brand Solutions
-
-[![Build Status](https://travis-ci.org/zalando-incubator/solution-center-feedback.svg?branch=master)](https://travis-ci.org/zalando-incubator/solution-center-feedback)
-
-[Changelog](CHANGELOG.md)
 
 ## Installation
 
@@ -23,15 +19,15 @@ npm install solution-center-feedback
 2. Insert the component at the bottom of your app (just before `</body>`):
 
     ```html
-    <sc-feedback id="$ctrl.id" name="$ctrl.name"></sc-feedback>
+    <sc-feedback module-id="$ctrl.id" module-name="$ctrl.name"></sc-feedback>
     ```
 
 ### Parameters
 
 All parameters are required.
 
-  * `id`: The ID associated with your project.
-  * `name`: The name you wish to display on the feedback component.
+  * `module-id`: The ID associated with your project.
+  * `module-name`: The name you wish to display on the feedback component.
 
 ## Style
 
@@ -46,10 +42,21 @@ Clone the repository, then run:
 npm install
 ```
 
+### Available commands
+
+* `npm start`: start a development server, open the demo in the browser, and watch for code changes.
+* `npm test`: run unit tests and generate a coverage report.
+  * `open coverage/index.html`: after running unit tests, open the coverage report.
+* `npm lint`: lint both the code and the associated spec files.
+* `npm clean`: remove build files/directories
+
 ## Contributing
 
 Before opening a pull request, please ensure that you have included unit tests for your changes
 and that all tests are passing.
+
+## Changelog
+[Changelog](CHANGELOG.md)
 
 ## License
 
