@@ -6,32 +6,39 @@
 
 [Changelog](CHANGELOG.md)
 
-### Installation
+## Installation
 
 ```shell
 npm install solution-center-feedback
 ```
 
-### Usage
+## Usage
 
-1. Load the script in your `<head>`:
+1. Include the script in your project:
 
     ```html
-    <script src="../node_modules/solution-center-feedback/dist/solutioncenter.feedback.js"></script>
+    <script src="/node_modules/solution-center-feedback/dist/solutioncenter.feedback.js"></script>
+    ```
+    
+2. Insert the component at the bottom of your app (just before `</body>`):
+
+    ```html
+    <sc-feedback id="$ctrl.id" name="$ctrl.name"></sc-feedback>
     ```
 
-### Style
+### Parameters
 
-The Solution Center feedback is intended to be used with the [dress code](https://github.com/zalando/dress-code) style. That package is included as a dependency.
+All parameters are required.
 
-Follow these steps to ensure you are using the right style for the feedback:
+  * `id`: The ID associated with your project.
+  * `name`: The name you wish to display on the feedback component.
 
- 1. Follow the [usage instructions for the dress code](https://github.com/zalando/dress-code#usage). 
- 2. Load the feedback styles. Add this to your `<head>`:
-     
-    ```<link rel="stylesheet" href="../node_modules/solution-center-feedback/dist/solutioncenter.feedback.css">``` 
+## Style
+
+Solution Center Feedback is intended to be used with [dress code](https://github.com/zalando/dress-code). That package is included as a dependency.
+Be sure to include dress-code in your project.
 	 
-### Develop
+## Develop
 
 Clone the repository, then run:
 
@@ -39,5 +46,11 @@ Clone the repository, then run:
 npm install
 ```
 
-### License
-MIT
+## Contributing
+
+Before opening a pull request, please ensure that you have included unit tests for your changes
+and that all tests are passing.
+
+## License
+
+[MIT](LICENSE)
