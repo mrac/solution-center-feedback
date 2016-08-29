@@ -16,7 +16,7 @@ npm install solution-center-feedback
     <script src="/node_modules/solution-center-feedback/dist/solutioncenter.feedback.js"></script>
     ```
     
-2. Insert the component at the bottom of your app (just before `</body>`):
+2. Insert the component near or at the bottom of your app:
 
     ```html
     <sc-feedback module-id="$ctrl.id" module-name="$ctrl.name"></sc-feedback>
