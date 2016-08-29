@@ -22,7 +22,7 @@
     "changelog:init": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "changelog:update": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "postchangelog": "git add CHANGELOG.md",
-    "prerelease": "npm build",
+    "prerelease": "npm run build",
     "release": "npm --no-git-tag-version version $v",
     "postrelease": "npm run branch:release && npm run commit:release && npm run tag:release && npm run push:release",
     "branch:release": "git checkout -b release/$npm_package_version",
