@@ -35,7 +35,6 @@ describe('ScFeedbackComponent', () => {
 
     it('should show module name in view', () => {
       el = getElement('.feedback__title--lower');
-      console.log(el.text());
       expect(el.text()).toEqual(jasmine.stringMatching(mock.attributes.module.name));
     });
   });
