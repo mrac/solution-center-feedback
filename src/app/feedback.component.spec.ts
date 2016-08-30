@@ -213,13 +213,15 @@ describe('ScFeedbackComponent', () => {
   describe('rate', () => {
     let stars: IAugmentedJQuery;
     let rating: IAugmentedJQuery;
+    let button: IAugmentedJQuery;
+    let scoreSelector = '.feedback__rating__score';
 
     beforeEach(() => {
       stars = getElement('.feedback__rating__star');
     });
 
     it('should set rating when a star is clicked', () => {
-      rating = getEl();
+      rating = getEl(scoreSelector);
       expect(rating.text()).toEqual(jasmine.stringMatching('0'));
       expect(vm.rating.actual).toBe(0);
 
@@ -230,14 +232,14 @@ describe('ScFeedbackComponent', () => {
     });
 
     it('should set hover value to passed value on mouse enter', () => {
-      rating = getEl();
+      rating = getEl(scoreSelector);
       expect(vm.rating.hover).toEqual(0);
       trigger(2, 'mouseenter');
       expect(vm.rating.hover).toEqual(3);
     });
 
     it('should set hover value to zero on mouse leave', () => {
-      rating = getEl();
+      rating = getEl(scoreSelector);
       expect(vm.rating.hover).toEqual(0);
       trigger(3, 'mouseenter');
       expect(vm.rating.hover).toEqual(2);
@@ -245,16 +247,36 @@ describe('ScFeedbackComponent', () => {
       expect(vm.rating.hover).toEqual(0);
     });
 
+    it('should disable submit button if no rating has been given', () => {
+      rate(2);
+      expect(button.hasClass('dc-btn--disabled')).toBe(false);
+      rate(0);
+      expect(button.hasClass('dc-btn--disabled')).toBe(true);
+    });
+
+    it('should enable submit button if a rating has been given', () => {
+      rate(0);
+      expect(button.hasClass('dc-btn--primary')).toBe(false);
+      rate(2);
+      expect(button.hasClass('dc-btn--primary')).toBe(true);
+    });
+
     /////////////////////////
 
     function trigger(index: number, type: string): void {
       angular.element(stars.get(index)).triggerHandler(type);
       sut.$scope.$digest();
-      rating = getEl();
+      rating = getEl(scoreSelector);
     }
 
-    function getEl(): IAugmentedJQuery {
-      return getElement('.feedback__rating__score');
+    function rate(r: number): void {
+      vm.rating.actual = r;
+      sut.$scope.$digest();
+      button = getEl('.dc-btn');
+    }
+
+    function getEl(selector: string): IAugmentedJQuery {
+      return getElement(selector);
     }
   });
 

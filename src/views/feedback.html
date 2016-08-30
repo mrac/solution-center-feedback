@@ -45,7 +45,8 @@
     <button ng-click="$ctrl.submit()"
             class="dc-btn"
             ng-class="{ 'dc-btn--primary': $ctrl.rating.actual !== 0,
-                        'dc-btn--disabled': $ctrl.rating === 0 }">
+                        'dc-btn--disabled': $ctrl.rating.actual === 0 }"
+            ng-disabled="$ctrl.rating.actual === 0">
       Submit
     </button>
   </div>
