@@ -30,14 +30,18 @@
           <p>This is a simple usage of the Solution Center feedback tool. The following directive is added at the bottom of the page:</p>
           <pre>
             &lt;sc-feedback
-                module=&quot;$ctrl.module&quot;&gt;
+                module-id=&quot;$ctrl.moduleId&quot;
+                module-name=&quot;$ctrl.moduleName&quot;&gt;
             &lt;/sc-feedback&gt;
           </pre>
         </div>
       </div>
 
       <div ng-controller="DemoController as DemoCtrl">
-        <sc-feedback module="DemoCtrl.module"></sc-feedback>
+        <sc-feedback
+          module-id="DemoCtrl.module.id"
+          module-name="DemoCtrl.module.name">
+        </sc-feedback>
       </div>
     </div>
 

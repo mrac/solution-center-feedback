@@ -12,7 +12,7 @@
       We value your opinion
     </div>
     <div class="feedback__title--lower">
-      How do you rate {{ $ctrl.module.name }}?
+      How do you rate {{ $ctrl.moduleName }}?
     </div>
   </div>
 
@@ -45,7 +45,8 @@
     <button ng-click="$ctrl.submit()"
             class="dc-btn"
             ng-class="{ 'dc-btn--primary': $ctrl.rating.actual !== 0,
-                        'dc-btn--disabled': $ctrl.rating === 0 }">
+                        'dc-btn--disabled': $ctrl.rating.actual === 0 }"
+            ng-disabled="$ctrl.rating.actual === 0">
       Submit
     </button>
   </div>
@@ -74,7 +75,7 @@
      class="solution-center-feedback solution-center-feedback--minified">
   <div ng-click="$ctrl.toggle()"
        class="feedback__opener">
-    Rate {{ $ctrl.module.name }}
+    Rate {{ $ctrl.moduleName }}
   </div>
   <div class="feedback__opener__bottom-bar"></div>
 </div>

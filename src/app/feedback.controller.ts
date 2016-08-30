@@ -5,7 +5,8 @@ const COOKIE_NAME = 'SC_FEEDBACK';
 class ScFeedbackController {
   static $inject: Array<string> = ['$cookies', 'ScFeedbackService'];
 
-  module: any;
+  moduleId: number;
+  moduleName: string;
   isAvailable: boolean = false;
   isMinified: boolean = false;
   submitted: boolean = false;
@@ -43,13 +44,13 @@ class ScFeedbackController {
   }
 
   isFeedbackAvailable(): void {
-    this.ScFeedbackService.isFeedbackAvailable(this.module.id)
+    this.ScFeedbackService.isFeedbackAvailable(this.moduleId)
       .then((r: any) => this.isAvailable = r.data.feedbackAvailable)
       .catch((e: any) => this.error = e);
   }
 
   submitFeedback(feedback: any): void {
-    this.ScFeedbackService.submitFeedback(this.module.id, feedback)
+    this.ScFeedbackService.submitFeedback(this.moduleId, feedback)
       .then((r: any) => this.submitted = true)
       .catch((e: any) => this.error = e);
   }
