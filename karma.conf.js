@@ -15,6 +15,7 @@ module.exports = function (config) {
     singleRun: true,
     autoWatchBatchDelay: 300,
     files: [
+      './node_modules/jquery/dist/jquery.min.js',
       './node_modules/angular/angular.min.js',
       './node_modules/angular-cookies/angular-cookies.min.js',
       './node_modules/angular-mocks/angular-mocks.js',

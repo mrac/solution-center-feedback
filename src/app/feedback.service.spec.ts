@@ -3,7 +3,7 @@ import ScFeedbackService from './feedback.service';
 import IInjectorService = angular.auto.IInjectorService;
 import IProvideService = angular.auto.IProvideService;
 
-fdescribe('ScFeedbackService', () => {
+describe('ScFeedbackService', () => {
   let $httpBackend: ng.IHttpBackendService;
   let scFeedbackService: ScFeedbackService;
   let scEnvironments: any;
@@ -13,7 +13,7 @@ fdescribe('ScFeedbackService', () => {
   afterEach(teardown);
 
   it('should check if feedback is available', () => {
-    spyOn(scFeedbackService, 'buildEndpointUrl').and.returnValue(mock.api);
+    spyOnServiceMethod('buildEndpointUrl', mock.api);
 
     scFeedbackService.isFeedbackAvailable(mock.module.id);
 
@@ -22,7 +22,7 @@ fdescribe('ScFeedbackService', () => {
   });
 
   it('should submit feedback', () => {
-    spyOn(scFeedbackService, 'buildEndpointUrl').and.returnValue(mock.api);
+    spyOnServiceMethod('buildEndpointUrl', mock.api);
 
     scFeedbackService.submitFeedback(mock.module.id, mock.feedback);
 
@@ -71,6 +71,10 @@ fdescribe('ScFeedbackService', () => {
     mock.environmentsService.getCurrentEnvironment.and.returnValue(mock.environment);
     mock.httpService.get.and.returnValue(true);
     mock.httpService.post.and.returnValue(true);
+  }
+
+  function spyOnServiceMethod(method: string, value?: any): void {
+    spyOn(scFeedbackService, method).and.returnValue(value);
   }
 
   function mocks(): void {

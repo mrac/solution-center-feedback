@@ -1,0 +1,18 @@
+@mixin feedback--bottom {
+  animation-duration: 4s;
+  animation-name: feedback-animation--bottom;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+
+  // Sets the last state of animation to remain off-screen
+  animation-fill-mode: both;
+}
+
+@keyframes feedback-animation--bottom {
+  0%, 25%, 50% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 100%);
+  }
+}
