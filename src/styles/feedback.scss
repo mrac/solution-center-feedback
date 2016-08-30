@@ -1,4 +1,5 @@
 @import "../../node_modules/dress-code/dist/sass/dress-code";
+@import "mixins";
 
 $dc-font-path: "fonts";
 
@@ -14,9 +15,6 @@ $dc-font-path: "fonts";
   display: flex;
   overflow: hidden;
   position: fixed;
-  transition-duration: 3s;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0, 1, .5, 1);
   width: 100%;
   z-index: 100;
 
@@ -26,6 +24,7 @@ $dc-font-path: "fonts";
     flex-direction: row;
     justify-content: center;
     max-height: 80px;
+    min-height: 80px;
     padding: 16px 3%;
 
     @media (max-width: 950px) {
@@ -45,6 +44,10 @@ $dc-font-path: "fonts";
     align-items: center;
     justify-content: center;
     max-height: 0;
+  }
+
+  &--submitted {
+    @include feedback--bottom;
   }
 
   .feedback__title {
@@ -88,10 +91,9 @@ $dc-font-path: "fonts";
           float: right;
           font-size: 200%;
           height: 24px;
-          margin-right: $dc-space50;
           overflow: hidden;
           white-space: nowrap;
-          width: 26px;
+          width: 30px;
 
           &::after {
             content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyMnB4IiB2aWV3Qm94PSIwIDAgMjQgMjIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+U3RhciAxIENvcHkgMzwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSJSYXRpbmctVG9vbCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8ZyBpZD0iMTI4MC0xNjAwcHgtLS0tUmF0aW5nLS0tLTEtRW1wdHkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNDAuMDAwMDAwLCAtODU0LjAwMDAwMCkiIGZpbGw9IiNGRkZGRkYiPiAgICAgICAgICAgIDxnIGlkPSJHcm91cC00IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwgODMyLjAwMDAwMCkiPiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzQwLjAwMDAwMCwgMjIuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iU3Rhci0xLUNvcHktMyIgcG9pbnRzPSIxMiAxOCA0Ljk0NjU3Njk3IDIxLjcwODIwMzkgNi4yOTM2NjA5IDEzLjg1NDEwMiAwLjU4NzMyMTgwNCA4LjI5MTc5NjA3IDguNDczMjg4NDkgNy4xNDU4OTgwMyAxMiAwIDE1LjUyNjcxMTUgNy4xNDU4OTgwMyAyMy40MTI2NzgyIDguMjkxNzk2MDcgMTcuNzA2MzM5MSAxMy44NTQxMDIgMTkuMDUzNDIzIDIxLjcwODIwMzkiPjwvcG9seWdvbj4gICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgIDwvZz4gICAgICAgIDwvZz4gICAgPC9nPjwvc3ZnPg==);
@@ -122,7 +124,7 @@ $dc-font-path: "fonts";
 
     .dc-input {
       margin-bottom: 0;
-      width: 70%;
+      width: 90%;
     }
 
     .dc-btn {
