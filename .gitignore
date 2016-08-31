@@ -3,6 +3,5 @@ dist
 coverage
 typings
 out
-typings
 .idea/
 npm-debug.*
