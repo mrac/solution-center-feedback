@@ -16,7 +16,7 @@ function DemoRunBlock($httpBackend: ng.IHttpBackendService) {
   $httpBackend.whenGET('https://ms-integration.norris.zalan.do/modules/3/feedback-status')
     .respond(function() {
     return [200, {
-      "feedbackAvailable": true
+      'feedbackAvailable': true
     }];
   });
 

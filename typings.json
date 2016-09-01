@@ -5,9 +5,7 @@
     "angular-mocks": "registry:dt/angular-mocks#1.5.0+20160608104721",
     "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
-    "lodash": "registry:dt/lodash#4.14.0+20160830145422",
-    "solution-center-communicator": "registry:dt/solution-center-communicator#2.2.0+20160829180856",
-    "source-map": "registry:dt/source-map#0.0.0+20160317120654",
-    "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526"
+    "require": "registry:dt/require#2.1.20+20160316155526",
+    "solution-center-communicator": "registry:dt/solution-center-communicator#2.2.0+20160829180856"
   }
 }
