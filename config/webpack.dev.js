@@ -12,12 +12,13 @@ module.exports = {
     filename: 'solutioncenter.feedback.js'
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    extensions: ['', '.ts', '.js', '.json']
   },
   module: {
     loaders: loaders,
+    noParse: /node_modules\/solution-center-communicator/,
     preLoaders: [
-      {test: /\.ts$/, loader: 'tslint'}
+      { test: /\.ts$/, loader: 'tslint' }
     ]
   },
   plugins: [
