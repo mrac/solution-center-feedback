@@ -1,0 +1,12 @@
+node_modules
+coverage
+*.log
+demo
+src
+tools
+test
+typings
+webpack
+.idea/
+out
+npm-debug.*
