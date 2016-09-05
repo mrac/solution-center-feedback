@@ -1,49 +1,37 @@
-require('phantomjs-polyfill');
+const webpackConfig = require('./config/webpack.test');
 
-var webpackConfig = require('./webpack/webpack.test.js');
-webpackConfig.entry = {};
-
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: false,
-    browsers: ['PhantomJS'],
-    singleRun: true,
-    autoWatchBatchDelay: 300,
     files: [
       './node_modules/jquery/dist/jquery.min.js',
       './node_modules/angular/angular.min.js',
       './node_modules/angular-cookies/angular-cookies.min.js',
       './node_modules/angular-mocks/angular-mocks.js',
-      './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      './node_modules/core-js/client/shim.min.js',
       './node_modules/solution-center-communicator/dist/solutioncenter.communicator.min.js',
-      './src/test.ts'
+      'test/index.ts'
     ],
-    babelPreprocessor: {
-      options: {
-          presets: ['es2015']
-      }
-    },
+    exclude: [
+      './node_modules'
+    ],
     preprocessors: {
-      'src/test.ts': ['webpack'],
-      'src/**/!(*.spec)+(.js)': ['coverage']
+      'test/index.ts': ['webpack', 'sourcemap']
     },
-    webpackMiddleware: {
-      stats: {
-        chunkModules: false,
-        colors: true
-      }
+    webpack: {
+      module: webpackConfig.module,
+      resolve: webpackConfig.resolve,
+      devtool: 'inline-source-map'
     },
-    webpack: webpackConfig,
-    reporters: [
-      'dots',
-      'spec',
-      'coverage'
-    ],
+    reporters: ['progress', 'coverage'],
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
+    browsers: ['PhantomJS'],
+    singleRun: true,
+    concurrency: Infinity,
     coverageReporter: {
       reporters: [
         {

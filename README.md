@@ -47,7 +47,6 @@ npm install
 * `npm start`: start a development server, open the demo in the browser, and watch for code changes.
 * `npm test`: run unit tests and generate a coverage report.
   * `open coverage/index.html`: after running unit tests, open the coverage report.
-* `npm lint`: lint both the code and the associated spec files.
 * `npm clean`: remove build files/directories
 
 ## Contributing
