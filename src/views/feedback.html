@@ -1,8 +1,8 @@
 <!-- if not minified -->
 <div ng-if="!$ctrl.isMinified"
      class="solution-center-feedback"
-     ng-class="{ 'solution-center-feedback--opened': $ctrl.isAvailable,
-                 'solution-center-feedback--closed': !$ctrl.isAvailable,
+     ng-class="{ 'solution-center-feedback--opened': $ctrl.isAvailable || $ctrl.debugConfig.showFeedback,
+                 'solution-center-feedback--closed': !$ctrl.isAvailable && !$ctrl.debugConfig.showFeedback,
                  'solution-center-feedback--submitted': $ctrl.submitted }">
 
   <!-- how do you rate this app -->
