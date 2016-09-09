@@ -21,12 +21,16 @@
        class="feedback__rating feedback__block">
     <div class="feedback__rating__stars">
       <ng-repeat ng-repeat="i in [5,4,3,2,1]">
-        <input type="radio" id="star-{{i}}" class="feedback__rating__input">
-        <label for="star-{{i}}" class="feedback__rating__star"
+        <input type="radio"
+               id="star-{{i}}"
+               class="feedback__rating__input">
+        <label for="star-{{i}}"
+               class="feedback__rating__star"
                ng-class="{ colored: $ctrl.rating.actual >= i || $ctrl.rating.hover >= i }"
                ng-click="$ctrl.rate(i)"
                ng-mouseenter="$ctrl.update(i)"
-               ng-mouseleave="$ctrl.update(0)">
+               ng-mouseleave="$ctrl.update(0)"
+               data-e2e="scf-star-{{i}}-input">
         </label>
       </ng-repeat>
     </div>
@@ -41,12 +45,14 @@
     <input ng-model="$ctrl.comment"
            type="text"
            class="dc-input"
-           placeholder="Leave a comment (optional)">
+           placeholder="Leave a comment (optional)"
+           data-e2e="scf-comment-input">
     <button ng-click="$ctrl.submit()"
             class="dc-btn"
             ng-class="{ 'dc-btn--primary': $ctrl.rating.actual !== 0,
                         'dc-btn--disabled': $ctrl.rating.actual === 0 }"
-            ng-disabled="$ctrl.rating.actual === 0">
+            ng-disabled="$ctrl.rating.actual === 0"
+            data-e2e="scf-submit-button">
       Submit
     </button>
   </div>
@@ -55,7 +61,8 @@
   <div ng-if="!$ctrl.submitted"
        class="feedback__later feedback__block">
     <span ng-click="$ctrl.toggle()"
-          class="dc-text">
+          class="dc-text"
+          data-e2e="scf-minify-button">
       Answer later
     </span>
   </div>
@@ -74,7 +81,8 @@
 <div ng-if="$ctrl.isMinified"
      class="solution-center-feedback solution-center-feedback--minified">
   <div ng-click="$ctrl.toggle()"
-       class="feedback__opener">
+       class="feedback__opener"
+       data-e2e="scf-open-button">
     Rate {{ $ctrl.moduleName }}
   </div>
   <div class="feedback__opener__bottom-bar"></div>
