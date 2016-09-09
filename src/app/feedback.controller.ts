@@ -7,6 +7,7 @@ class ScFeedbackController {
 
   moduleId: number;
   moduleName: string;
+  debugConfig: any;
   isAvailable: boolean = false;
   isMinified: boolean = false;
   submitted: boolean = false;
@@ -45,14 +46,14 @@ class ScFeedbackController {
 
   isFeedbackAvailable(): void {
     this.ScFeedbackService.isFeedbackAvailable(this.moduleId)
-      .then((r: any) => this.isAvailable = r.data.feedbackAvailable)
-      .catch((e: any) => this.error = e);
+      .then((response: any) => this.isAvailable = response.data.feedbackAvailable)
+      .catch((error: any) => this.error = error);
   }
 
   submitFeedback(feedback: any): void {
     this.ScFeedbackService.submitFeedback(this.moduleId, feedback)
-      .then((r: any) => this.submitted = true)
-      .catch((e: any) => this.error = e);
+      .then((response: any) => this.submitted = true)
+      .catch((error: any) => this.error = error);
   }
 }
 

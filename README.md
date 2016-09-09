@@ -19,15 +19,16 @@ npm install solution-center-feedback
 2. Insert the component near or at the bottom of your app:
 
     ```html
-    <sc-feedback module-id="$ctrl.id" module-name="$ctrl.name"></sc-feedback>
+    <sc-feedback module-id="$ctrl.id" module-name="$ctrl.name" debug-config="$ctrl.debug"></sc-feedback>
     ```
 
 ### Parameters
 
-All parameters are required.
+All the module related parameters are required, the one for debugging is optional
 
   * `module-id`: The ID associated with your project.
   * `module-name`: The name you wish to display on the feedback component.
+  * `debug-config`: Configuration object for debugging purposes
 
 ## Style
 
