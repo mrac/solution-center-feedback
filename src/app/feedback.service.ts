@@ -15,13 +15,11 @@ class ScFeedbackService {
   }
 
   isFeedbackAvailable(moduleId: number): ng.IPromise<any> {
-    this.get = this.buildEndpointUrl('get', moduleId);
-    return this.$http.get(this.get);
+    return this.$http.get(this.buildEndpointUrl('get', moduleId));
   }
 
   submitFeedback(moduleId: number, feedback: any): ng.IPromise<any> {
-    this.post = this.buildEndpointUrl('post', moduleId);
-    return this.$http.post(this.post, feedback);
+    return this.$http.post(this.buildEndpointUrl('post', moduleId), feedback);
   }
 
   buildEndpointUrl(type: string, moduleId: number): string {
