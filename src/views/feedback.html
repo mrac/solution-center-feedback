@@ -68,10 +68,18 @@
   </div>
 
   <!-- thank you message -->
-  <div ng-if="$ctrl.submitted"
+  <div ng-if="$ctrl.submitted && !$ctrl.error"
        class="feedback__submitted">
     <span class="dc-text">
       Thanks!
+    </span>
+  </div>
+
+  <!-- error message -->
+  <div ng-if="$ctrl.error"
+       class="feedback__error">
+    <span class="dc-text">
+      We were unable to record your feedback. We'll ask again later.
     </span>
   </div>
 

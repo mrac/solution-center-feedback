@@ -53,7 +53,10 @@ class ScFeedbackController {
   submitFeedback(feedback: any): void {
     this.ScFeedbackService.submitFeedback(this.moduleId, feedback)
       .then((response: any) => this.submitted = true)
-      .catch((error: any) => this.error = error);
+      .catch((error: any) => {
+        this.error = error;
+        this.submitted = true;
+      });
   }
 }
 

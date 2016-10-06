@@ -179,14 +179,12 @@ describe('ScFeedbackComponent', () => {
       expect(getEl().length).toBe(1);
     });
 
-    it('should not submit feedback if error is encountered', () => {
-      expect(vm.submitted).toBe(false);
+    it('should not show thank you message if error is encountered', () => {
       expect(getEl().length).toBe(0);
 
       spyOnServiceMethod('submitFeedback');   // mimic error response
       callMethod('submit');
 
-      expect(vm.submitted).toBe(false);
       expect(getEl().length).toBe(0);
     });
 
@@ -199,10 +197,20 @@ describe('ScFeedbackComponent', () => {
       expect(vm.error).toBeDefined();
     });
 
+    it('should show error message if error is encountered', () => {
+      expect(getEl('.feedback__error').length).toBe(0);
+
+      spyOnServiceMethod('submitFeedback');   // mimic error response
+      callMethod('submit');
+
+      expect(getEl('.feedback__error').length).toBe(1);
+    });
+
     /////////////////////////
 
-    function getEl(): IAugmentedJQuery {
-      return getElement('.feedback__submitted');
+    function getEl(val?: string): IAugmentedJQuery {
+      val = val || '.feedback__submitted';
+      return getElement(val);
     }
   });
 
