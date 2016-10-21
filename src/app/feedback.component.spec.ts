@@ -349,7 +349,8 @@ describe('ScFeedbackComponent', () => {
       },
       feedbackService: jasmine.createSpyObj('ScFeedbackService', [
         'isFeedbackAvailable',
-        'submitFeedback'
+        'submitFeedback',
+        'sanitize'
       ]),
       COOKIE_NAME: 'SC_FEEDBACK',
       cookieService: jasmine.createSpyObj('mock.cookieService', ['get', 'put']),
