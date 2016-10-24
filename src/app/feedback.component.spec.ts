@@ -206,6 +206,19 @@ describe('ScFeedbackComponent', () => {
       expect(getEl('.feedback__error').length).toBe(1);
     });
 
+    it('should call sanitize method', () => {
+      vm.comment = mock.comment;
+
+      spyOnServiceMethod('submitFeedback', true);
+      spyOnServiceMethod('sanitize');
+
+      callMethod('submit');
+
+      expect(mock.feedbackService.sanitize).toHaveBeenCalledWith(
+        mock.comment
+      );
+    });
+
     /////////////////////////
 
     function getEl(val?: string): IAugmentedJQuery {
@@ -354,7 +367,8 @@ describe('ScFeedbackComponent', () => {
       ]),
       COOKIE_NAME: 'SC_FEEDBACK',
       cookieService: jasmine.createSpyObj('mock.cookieService', ['get', 'put']),
-      rootCssClass: '.solution-center-feedback'
+      rootCssClass: '.solution-center-feedback',
+      comment: 'Test comment'
     };
   }
 

@@ -8,7 +8,9 @@
   "scripts": {
     "init": "npm run clean -s",
     "clean": "rimraf \"src/**/*.{js,js.map,css}\" & rimraf \"{coverage,dist}\"",
+    "pretest": "npm run rimraf -- coverage",
     "test": "karma start",
+    "rimraf": "rimraf",
     "prestart": "npm run init",
     "start": "webpack --config config/webpack.dev.js --watch --colors",
     "prebuild": "npm run clean -s && npm test",

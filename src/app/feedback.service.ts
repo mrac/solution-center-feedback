@@ -27,7 +27,7 @@ class ScFeedbackService {
   }
 
   sanitize(str: string): string {
-    let pattern = /(<script(\s|\S)*?<\/script>)|(<style(\s|\S)*?<\/style>)|(<!--(\s|\S)*?-->)|(<\/?(\s|\S)*?>)/g;
+    let pattern = /<([^>]+)>/g;
     return str.replace(pattern, '');
   }
 }

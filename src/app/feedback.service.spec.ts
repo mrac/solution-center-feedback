@@ -94,8 +94,8 @@ describe('ScFeedbackService', () => {
       httpService: jasmine.createSpyObj('$http', ['get', 'post']),
       getEndpoint: buildEndpointUrl,
       input: {
-        evil: 'test <script>console.log("hi")</script> test',
-        nice: 'test  test'
+        evil: 'hello <link type="text/css" rel="STYLE"></link> <H5>test<SCRIPT>console.log("hi");</SCRIPT>test test2 <style>body { background: #f00; }</style>',
+        nice: 'hello  testconsole.log("hi");test test2 body { background: #f00; }'
       }
     };
   }
