@@ -27,7 +27,8 @@ class ScFeedbackController {
   }
 
   submit(): void {
-    this.submitFeedback({ score: this.rating.actual, comment: this.comment });
+    let comment = this.ScFeedbackService.sanitize(this.comment);
+    this.submitFeedback({ score: this.rating.actual, comment: comment });
   }
 
   toggle(): void {

@@ -25,6 +25,11 @@ class ScFeedbackService {
   buildEndpointUrl(type: string, moduleId: number): string {
     return `${this.environment.MODULE_SERVICE}/modules/${moduleId}/${this[type]}`;
   }
+
+  sanitize(str: string): string {
+    let pattern = /<([^>]+)>/g;
+    return str.replace(pattern, '');
+  }
 }
 
 export default ScFeedbackService;

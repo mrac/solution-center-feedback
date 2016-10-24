@@ -8,7 +8,9 @@
   "scripts": {
     "init": "npm run clean -s",
     "clean": "rimraf \"src/**/*.{js,js.map,css}\" & rimraf \"{coverage,dist}\"",
+    "pretest": "npm run rimraf -- coverage",
     "test": "karma start",
+    "rimraf": "rimraf",
     "prestart": "npm run init",
     "start": "webpack --config config/webpack.dev.js --watch --colors",
     "prebuild": "npm run clean -s && npm test",
@@ -73,6 +75,7 @@
     "karma-webpack": "^1.8.0",
     "node-sass": "^3.8.0",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.4",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "ts-loader": "^0.8.2",

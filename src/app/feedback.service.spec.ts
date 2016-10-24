@@ -40,6 +40,11 @@ describe('ScFeedbackService', () => {
     expect(url).toEqual(mock.getEndpoint('post'));
   });
 
+  it('should sanitize comment', () => {
+    let input = scFeedbackService.sanitize(mock.input.evil);
+    expect(input).toEqual(mock.input.nice);
+  });
+
   /////////////////////////
 
   function setup(): void {
@@ -87,7 +92,11 @@ describe('ScFeedbackService', () => {
       environment: { MODULE_SERVICE: 'ms' },
       environmentsService: jasmine.createSpyObj('ScEnvironments', ['getCurrentEnvironment']),
       httpService: jasmine.createSpyObj('$http', ['get', 'post']),
-      getEndpoint: buildEndpointUrl
+      getEndpoint: buildEndpointUrl,
+      input: {
+        evil: 'hello <link type="text/css" rel="STYLE"></link> <H5>test<SCRIPT>console.log("hi");</SCRIPT>test test2 <style>body { background: #f00; }</style>',
+        nice: 'hello  testconsole.log("hi");test test2 body { background: #f00; }'
+      }
     };
   }
 
