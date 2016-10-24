@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/zalando-incubator/solution-center-feedback/compare/1.1.1...v1.2.0) (2016-10-24)
+
+
+### Bug Fixes
+
+* **comment:** sanitize comment ([e1cec50](https://github.com/zalando-incubator/solution-center-feedback/commit/e1cec50))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/zalando-incubator/solution-center-feedback/compare/1.1.0...v1.1.1) (2016-09-14)
 
