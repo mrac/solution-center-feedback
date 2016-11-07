@@ -5,10 +5,11 @@ const COOKIE_NAME = 'SC_FEEDBACK';
 class ScFeedbackController {
   static $inject: Array<string> = ['$cookies', 'ScFeedbackService'];
 
-  moduleId: number;
   moduleName: string;
-  debugConfig: any;
   isAvailable: boolean = false;
+  onSubmit: (params: { feedback: any, moduleId: number }) => ng.IPromise<any>;
+  moduleId: number;
+  debugConfig: any;
   isMinified: boolean = false;
   submitted: boolean = false;
   error: any;
@@ -23,7 +24,6 @@ class ScFeedbackController {
     private ScFeedbackService: ScFeedbackService
   ) {
     this.isMinified = this.$cookies.get(COOKIE_NAME) === 'true' || false;
-    this.isFeedbackAvailable();
   }
 
   submit(): void {
@@ -45,16 +45,11 @@ class ScFeedbackController {
     this.rating.hover = (rating === 0 && this.rating.actual) || rating;
   }
 
-  isFeedbackAvailable(): void {
-    this.ScFeedbackService.isFeedbackAvailable(this.moduleId)
-      .then((response: any) => this.isAvailable = response.data.feedbackAvailable)
-      .catch((error: any) => this.error = error);
-  }
-
   submitFeedback(feedback: any): void {
-    this.ScFeedbackService.submitFeedback(this.moduleId, feedback)
-      .then((response: any) => this.submitted = true)
-      .catch((error: any) => {
+    this.onSubmit({ feedback: feedback, moduleId: this.moduleId })
+      .then(() => {
+        this.submitted = true;
+      }, (error: any) => {
         this.error = error;
         this.submitted = true;
       });
