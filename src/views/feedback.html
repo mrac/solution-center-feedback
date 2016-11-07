@@ -1,5 +1,5 @@
 <!-- if not minified -->
-<div ng-if="!$ctrl.isMinified"
+<div ng-show="!$ctrl.isMinified"
      class="solution-center-feedback"
      ng-class="{ 'solution-center-feedback--opened': $ctrl.isAvailable || $ctrl.debugConfig.showFeedback,
                  'solution-center-feedback--closed': !$ctrl.isAvailable && !$ctrl.debugConfig.showFeedback,
@@ -86,7 +86,7 @@
 </div>
 
 <!-- if minified -->
-<div ng-if="$ctrl.isMinified"
+<div ng-show="$ctrl.isMinified"
      class="solution-center-feedback solution-center-feedback--minified">
   <div ng-click="$ctrl.toggle()"
        class="feedback__opener"
